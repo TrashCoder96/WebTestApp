@@ -157,6 +157,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DAO\RequestDAO.cs" />
+    <Compile Include="Models\Entity\Group.cs" />
     <Compile Include="Models\Link.cs" />
     <Compile Include="Models\Entity\Request.cs" />
     <Compile Include="Models\Result.cs" />

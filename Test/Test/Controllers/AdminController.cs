@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Test.Models;
+using System.Web.Security;
 
 namespace Test.Controllers
 {
@@ -33,12 +34,22 @@ namespace Test.Controllers
             return RedirectToAction("Requests", "Admin");
         }
 
-        [HttpPost]
+        [HttpGet]
         [Authorize(Roles = "Admin")]
-        public ActionResult Accept(Request req)
+        public ActionResult Accept(string User, string Role)
         {
-            return View();
+            RequestDAO requestdao = new RequestDAO();
+            Roles.AddUserToRole(User, Role);
+            requestdao.Delete(User, Role);
+            return RedirectToAction("Requests", "Admin");
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public ActionResult Groups()
+        {
+
+            return View();
+        }
     }
 }
