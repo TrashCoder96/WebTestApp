@@ -1,0 +1,73 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="WebTestSite.master.cs" Inherits="Test.WebTestSite" %>
+<%@ Import Namespace="System.Web.Mvc.Html" %>
+<%@ Import Namespace="System.Collections.Generic" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+
+<body style="background-color: white">
+    <div style="border: 1px solid blue; background-color: #99CCFF; margin: 1%; border-radius: 5px; vertical-align:text-bottom">
+
+    <div style="background-color: #99CCFF; margin-bottom: 0px; border-top-left-radius: 5px; border-top-right-radius: 5px">
+
+    <div ID="logo" style="font-size: x-large; color: Blue; font-family: Arial" runat="server">
+      
+      <div style="width: 80px; height: 70px; display: inline-block">
+      <asp:Image ID="logoIm" style="width: 100%; height: 100%; border-bottom-right-radius: 5px; border-top-left-radius: 5px" runat="server"/>
+      </div>
+      <div style="height: 70px; width: 50%; display: inline-block; vertical-align: top; position: relative" >
+
+       <div style="font-size: 11px; position: absolute; left: 0px; top: 0px; text-align: center">
+       <asp:Label ID="Welcome" Text="Привет" runat="server" />
+       </div>
+      
+       <div  style="font-size: 20px; position: absolute; left: 0px; bottom: 0px;">
+       WebTest - сайт для тестирования студентов
+       </div>
+
+      </div>
+
+    </div>
+
+    <div id="log" style="text-align: right; margin-right: 3%">
+    <%
+        List<Test.Models.Link> list =  (List<Test.Models.Link>)ViewData["links"];
+        if (list != null)
+        {
+        foreach(Test.Models.Link l in list)
+        { %>
+        <%=Html.ActionLink(l.Name, l.Action, l.Controller) %>
+       <% } } %>
+    </div>
+
+    </div>
+
+     <div id="rep" style="width:15%; float: left; margin: 3%">
+         <%
+        List<Test.Models.Link> functions =  (List<Test.Models.Link>)ViewData["functions"];
+        if (functions != null)
+        {
+        foreach(Test.Models.Link l in functions)
+        { %>
+        <%=Html.ActionLink(l.Name, l.Action, l.Controller) %>
+         <br />
+       <% } } %>
+     </div>
+
+
+
+      <div style="background-color: white; overflow: auto; margin: 3%; border-radius: 5px; border-width: 1px; border-style: solid; border-color: blue">
+      <div style="margin: 3%">
+      <asp:ContentPlaceHolder id="Main" runat="server" />
+      </div>
+      </div>
+
+    </div>
+
+
+    
+</body>
+</html>
