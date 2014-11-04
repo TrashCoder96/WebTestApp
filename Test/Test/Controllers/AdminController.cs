@@ -20,7 +20,7 @@ namespace Test.Controllers
             ViewData["links"] = getLinks();
             ViewData["functions"] = getFunctions();
             RequestDAO requestdao = new RequestDAO();
-            List<Request> requests = (List<Request>)requestdao.ReadAll().Value;
+            List<Request> requests = (List<Request>)requestdao.ReadAllRequests(x => (true)).Value;
             ViewData["requests"] = requests;
             return View();
         }
@@ -30,7 +30,7 @@ namespace Test.Controllers
         public ActionResult Reject(string User, string Role)
         {
             RequestDAO requestdao = new RequestDAO();
-            requestdao.Delete(User, Role);
+            requestdao.RejectRequest(x => (x.Role == Role && x.User.Login == User));
             return RedirectToAction("Requests", "Admin");
         }
 
@@ -39,17 +39,8 @@ namespace Test.Controllers
         public ActionResult Accept(string User, string Role)
         {
             RequestDAO requestdao = new RequestDAO();
-            Roles.AddUserToRole(User, Role);
-            requestdao.Delete(User, Role);
+            requestdao.SatisfyRequest(x => (x.Role == Role && x.User.Login == User));
             return RedirectToAction("Requests", "Admin");
-        }
-
-        [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public ActionResult Groups()
-        {
-
-            return View();
         }
     }
 }

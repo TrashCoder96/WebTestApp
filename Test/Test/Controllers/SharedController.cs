@@ -30,12 +30,21 @@ namespace Test.Controllers
             ViewData["links"] = getLinks();
             ViewData["functions"] = getFunctions();
             RequestDAO requestDAO = new RequestDAO();
-            UserDAO userDAO = new UserDAO();
-            List<User> users = (List<User>)userDAO.ReadAll().Value;
-            Request req = new Request(users.Find(x => (x.Login == User.Identity.Name)), role, message);
-            requestDAO.Insert(req);
+            requestDAO.CreateRequest(User.Identity.Name, role, message);
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult Groups()
+        {
+            ViewData["links"] = getLinks();
+            ViewData["functions"] = getFunctions();
+
+            return View();
+        }
+
+       
 
 
 
