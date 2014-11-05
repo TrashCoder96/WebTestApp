@@ -5,16 +5,15 @@ using System.Web;
 
 namespace Test.Models
 {
-    public class Group
+    public class Discipline
     {
         public string Name { get; set; }
-        public List<User> Students { get; set; }
+        public User Lector { get; set; }
 
-        public Group(string Name)
+        public Discipline(string Name, User Lector)
         {
-            Students = new List<User>();
+            this.Lector = Lector;
             this.Name = Name;
         }
-
     }
 }

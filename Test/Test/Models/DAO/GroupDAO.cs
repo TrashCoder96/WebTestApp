@@ -48,23 +48,25 @@ namespace Test.Models
             SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["ApplicationServices"].ConnectionString);
             SqlCommand command = new SqlCommand();
             int n = 0;
-            //try
-            //
+            try
+            {
+            
                 connection.Open();
                 command.Connection = connection;
                 command.CommandText = "INSERT INTO [Group] VALUES(NEWID(), @n)";
-                command.Parameters.Add(new SqlParameter("@n", Name));
+                command.Parameters.Add(new SqlParameter("@n", Name) { SqlDbType = System.Data.SqlDbType.NChar });
                 n = command.ExecuteNonQuery();
+                if (n == 0) throw new Exception();
 
-           // }
-           // catch (Exception e)
-           // {
+            }
+            catch (Exception e)
+            {
                 Success = false;
-          //  }
-          //  finally
-          //  {
+            }
+            finally
+            {
                 connection.Close();
-          //  }
+            }
             return new Result(Success, n);
         }
 
@@ -79,9 +81,10 @@ namespace Test.Models
                 connection.Open();
                 command.Connection = connection;
                 command.CommandText = "UPDATE [Group] SET [Group].Name = @n WHERE [Group].Name LIKE @o";
-                command.Parameters.Add(new SqlParameter("@n", NewName));
-                command.Parameters.Add(new SqlParameter("@o", OldName));
+                command.Parameters.Add(new SqlParameter("@n", NewName) { SqlDbType = System.Data.SqlDbType.NChar });
+                command.Parameters.Add(new SqlParameter("@o", OldName) { SqlDbType = System.Data.SqlDbType.NChar });
                 n = command.ExecuteNonQuery();
+                if (n == 0) throw new Exception();
 
             }
             catch (Exception e)
@@ -109,9 +112,64 @@ namespace Test.Models
                 foreach (Group g in (List<Group>)ReadAll(p).Value)
                 {
                     command.CommandText = "DELETE FROM [Group] WHERE [Group].Name LIKE @n";
-                    command.Parameters.Add(new SqlParameter("@n", g.Name));
+                    command.Parameters.Add(new SqlParameter("@n", g.Name) { SqlDbType = System.Data.SqlDbType.NChar });
                     n = command.ExecuteNonQuery();
+                    if (n == 0) throw new Exception();
                 }
+            }
+            catch (Exception e)
+            {
+                Success = false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return new Result(Success, n);
+        }
+
+        public Result AddStudent(string user, string Name)
+        {
+            bool Success = true;
+            SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["ApplicationServices"].ConnectionString);
+            SqlCommand command = new SqlCommand();
+            int n = 0;
+            try
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "INSERT INTO [UsersANDGroup] VALUES((SELECT GroupId FROM [Group] WHERE [Group].[Name] LIKE @n), (SELECT UserId FROM [aspnet_Users] WHERE [aspnet_Users].[LoweredUserName] LIKE @u))";
+                command.Parameters.Add(new SqlParameter("@n", Name) { SqlDbType = System.Data.SqlDbType.NChar });
+                command.Parameters.Add(new SqlParameter("@u", user) { SqlDbType = System.Data.SqlDbType.NVarChar });
+                n = command.ExecuteNonQuery();
+                if (n == 0) throw new Exception();
+            }
+            catch (Exception e)
+            {
+                Success = false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return new Result(Success, n);
+        }
+
+        public Result RemoveStudent(string user, string Name)
+        {
+            bool Success = true;
+            SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["ApplicationServices"].ConnectionString);
+            SqlCommand command = new SqlCommand();
+            int n = 0;
+            try
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "DELETE FROM [UsersANDGroup] WHERE (SELECT GroupId FROM [Group] WHERE [Group].[Name] LIKE @n) = [UsersANDGroup].[GroupId] AND (SELECT UserId FROM [aspnet_Users] WHERE [aspnet_Users].[LoweredUserName] LIKE @u) = [UsersANDGroup].[UserId]";
+                command.Parameters.Add(new SqlParameter("@n", Name) { SqlDbType = System.Data.SqlDbType.NChar });
+                command.Parameters.Add(new SqlParameter("@u", user) { SqlDbType = System.Data.SqlDbType.NVarChar });
+                n = command.ExecuteNonQuery();
+                if (n == 0) throw new Exception();
             }
             catch (Exception e)
             {

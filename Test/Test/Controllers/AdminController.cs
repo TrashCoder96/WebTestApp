@@ -24,7 +24,7 @@ namespace Test.Controllers
         }
 
         //Отклонить запрос
-        [HttpPost]
+        [HttpGet]
         [Authorize(Roles = "Admin")]
         public ActionResult Reject(string User, string Role)
         {
@@ -34,7 +34,7 @@ namespace Test.Controllers
         }
 
         //Принять запрос
-        [HttpPost]
+        [HttpGet]
         [Authorize(Roles = "Admin")]
         public ActionResult Accept(string User, string Role)
         {

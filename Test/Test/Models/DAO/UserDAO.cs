@@ -19,7 +19,7 @@ namespace Test.Models
             {
                 connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["ApplicationServices"].ConnectionString);
                 connection.Open();
-                SqlCommand command = new SqlCommand("SELECT EMail, UserName FROM aspnet_Users, aspnet_Membership WHERE aspnet_Users.UserId = aspnet_Membership.UserId", connection);
+                SqlCommand command = new SqlCommand("SELECT EMail, LoweredUserName FROM aspnet_Users, aspnet_Membership WHERE aspnet_Users.UserId = aspnet_Membership.UserId", connection);
                 command.ExecuteNonQuery();
                 reader = command.ExecuteReader();
                 while (reader.Read())

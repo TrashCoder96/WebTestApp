@@ -13,10 +13,10 @@
             <%: item.Name %>
         </td>
         <td>
-            <%: Html.ActionLink("Удалить", "DeleteGroup", "Admin", new { Name=item.Name }, null) %>
+             <%: Html.Action("UpdateGroupView", "Admin", new { Name=item.Name }) %>
         </td>
         <td>
-            <%: Html.Action("UpdateGroupView", "Admin", new { Name=item.Name }) %>
+             <%: Html.Action("DeleteGroupView", "Admin", new { Name=item.Name }) %>
         </td>
 
     </tr>

@@ -33,20 +33,20 @@ namespace Test.Controllers
             if(User.IsInRole("Admin"))
             {
                 links.Add(new Models.Link("Requests", "Admin", "Управление запросами"));
-                links.Add(new Models.Link("Groups", "Admin", "Группы"));
+                links.Add(new Models.Link("Groups", "Admin", "Управление группами"));
                 links.Add(new Models.Link("Tests", "Admin", "Управление тестами"));
+                links.Add(new Models.Link("Students", "Admin", "Управление студентами"));
             }
             if (User.IsInRole("Lector"))
             {
-                links.Add(new Models.Link("Tests", "Lector", "Управление тестами"));
-
+                links.Add(new Models.Link("Disciplines", "Lector", "Управление дисциплинами"));
             }
             if (User.IsInRole("Student"))
             {
                 links.Add(new Models.Link("Take", "Student", "Пройти тест"));
-                links.Add(new Models.Link("Take", "Student", "Пройти тест"));
 
             }
+
             return links;
         }
     }
