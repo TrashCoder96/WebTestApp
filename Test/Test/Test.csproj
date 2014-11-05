@@ -159,7 +159,6 @@
     <Compile Include="Models\DAO\GroupDAO.cs" />
     <Compile Include="Models\DAO\RequestDAO.cs" />
     <Compile Include="Models\Entity\Group.cs" />
-    <Compile Include="Models\DAO\StudentDAO.cs" />
     <Compile Include="Models\Entity\Student.cs" />
     <Compile Include="Models\Link.cs" />
     <Compile Include="Models\Entity\Request.cs" />
@@ -247,12 +246,14 @@
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Views\Admin\CreateGroup.aspx" />
+    <Content Include="Views\Admin\Groups.aspx" />
     <Content Include="Views\Admin\Requests.aspx" />
+    <Content Include="Views\Admin\UpdateGroupView.aspx" />
     <Content Include="Views\Auth\Login.aspx" />
     <Content Include="Views\Auth\Registration.aspx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Shared\CreateRequest.aspx" />
-    <Content Include="Views\Shared\Groups.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

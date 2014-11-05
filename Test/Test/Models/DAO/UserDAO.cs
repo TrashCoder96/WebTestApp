@@ -9,7 +9,7 @@ namespace Test.Models
 {
     public class UserDAO
     {
-        public Result ReadAll()
+        public Result ReadAll(Predicate<User> p)
         {
             bool success = true;
             List<User> users = new List<User>();
@@ -27,6 +27,7 @@ namespace Test.Models
                     User user = new User("fname", "lname", reader[0].ToString(), reader[1].ToString());
                     users.Add(user);
                 }
+                users = users.FindAll(p);
             }
             catch (SqlException e)
             {

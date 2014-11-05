@@ -19,7 +19,7 @@ namespace Test.Models
             {
                 connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["ApplicationServices"].ConnectionString);
                 connection.Open();
-                SqlCommand command = new SqlCommand("SELECT GroupId, Name FROM Group", connection);
+                SqlCommand command = new SqlCommand("SELECT GroupId, Name FROM [Group]", connection);
                 command.ExecuteNonQuery();
                 reader = command.ExecuteReader();
                 while (reader.Read())
@@ -48,27 +48,27 @@ namespace Test.Models
             SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["ApplicationServices"].ConnectionString);
             SqlCommand command = new SqlCommand();
             int n = 0;
-            try
-            {
+            //try
+            //
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "INSERT INTO Group VALUES(NEWID(), @n)";
+                command.CommandText = "INSERT INTO [Group] VALUES(NEWID(), @n)";
                 command.Parameters.Add(new SqlParameter("@n", Name));
                 n = command.ExecuteNonQuery();
 
-            }
-            catch (Exception e)
-            {
+           // }
+           // catch (Exception e)
+           // {
                 Success = false;
-            }
-            finally
-            {
+          //  }
+          //  finally
+          //  {
                 connection.Close();
-            }
+          //  }
             return new Result(Success, n);
         }
 
-        public Result UpdateGroup(string NewName)
+        public Result UpdateGroup(string NewName, string OldName)
         {
             bool Success = true;
             SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["ApplicationServices"].ConnectionString);
@@ -78,8 +78,9 @@ namespace Test.Models
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "UPDATE Group SET Group.Name = @n WHERE Name = @n)";
+                command.CommandText = "UPDATE [Group] SET [Group].Name = @n WHERE [Group].Name LIKE @o";
                 command.Parameters.Add(new SqlParameter("@n", NewName));
+                command.Parameters.Add(new SqlParameter("@o", OldName));
                 n = command.ExecuteNonQuery();
 
             }
@@ -104,9 +105,11 @@ namespace Test.Models
             {
                 connection.Open();
                 command.Connection = connection;
+                List<Group> gt = (List<Group>)ReadAll(p).Value;
                 foreach (Group g in (List<Group>)ReadAll(p).Value)
                 {
-                    command.CommandText = "DELETE FROM Group WHERE Name = @n)";
+                    command.CommandText = "DELETE FROM [Group] WHERE [Group].Name LIKE @n";
+                    command.Parameters.Add(new SqlParameter("@n", g.Name));
                     n = command.ExecuteNonQuery();
                 }
             }

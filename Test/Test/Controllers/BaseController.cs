@@ -33,7 +33,7 @@ namespace Test.Controllers
             if(User.IsInRole("Admin"))
             {
                 links.Add(new Models.Link("Requests", "Admin", "Управление запросами"));
-                links.Add(new Models.Link("Groups", "Admin", "Управление группами"));
+                links.Add(new Models.Link("Groups", "Admin", "Группы"));
                 links.Add(new Models.Link("Tests", "Admin", "Управление тестами"));
             }
             if (User.IsInRole("Lector"))

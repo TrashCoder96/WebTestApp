@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/WebTestSite.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/WebTestSite.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<Test.Models.Request>>" %>
 <%@ Import Namespace="System.Collections.Generic" %>
 <%@ Import Namespace="System.Web.Mvc.Html" %>
 
@@ -29,23 +29,23 @@
         </tr>
 
         <% 
-        List<Test.Models.Request> requests = (List<Test.Models.Request>)ViewData["requests"];
-        for (int i = 0; i < requests.Count; i++) { %>
+        foreach (Test.Models.Request r in this.Model)
+        { %>
         <tr>
             <td>
-                <%=requests[i].User.Login %>
+                <%=r.User.Login %>
             </td>
             <td>
-                <%=requests[i].Role %>
+                <%=r.Role %>
             </td>
             <td>
-                <%=requests[i].Message %>
+                <%=r.Message %>
             </td>
              <td>
-                <%=Html.ActionLink("Принять запрос", "Accept", "Admin", new { User = requests[i].User.Login, Role = requests[i].Role }, null) %>
+                <%=Html.ActionLink("Принять запрос", "Accept", "Admin", new { User = r.User.Login, Role = r.Role }, null) %>
             </td>
             <td>
-                <%=Html.ActionLink("Отклонить запрос", "Reject", "Admin", new { User = requests[i].User.Login, Role = requests[i].Role }, null) %>
+                <%=Html.ActionLink("Отклонить запрос", "Reject", "Admin", new { User = r.User.Login, Role = r.Role }, null) %>
             </td>
         </tr>
         <% } %>

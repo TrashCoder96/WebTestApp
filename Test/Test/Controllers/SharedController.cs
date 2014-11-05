@@ -12,17 +12,17 @@ namespace Test.Controllers
         //
         // GET: /Shared/
 
-        
+        //Представление для верификации
         [HttpGet]
         [Authorize]
         public ActionResult CreateRequest()
         {
             ViewData["links"] = getLinks();
             ViewData["functions"] = getFunctions();
-           
             return View();
         }
 
+        //Запросить верификацию
         [HttpPost]
         [Authorize]
         public ActionResult CreateRequest(string message, string role)
@@ -33,22 +33,6 @@ namespace Test.Controllers
             requestDAO.CreateRequest(User.Identity.Name, role, message);
             return RedirectToAction("Index", "Home");
         }
-
-        [HttpGet]
-        [Authorize]
-        public ActionResult Groups()
-        {
-            ViewData["links"] = getLinks();
-            ViewData["functions"] = getFunctions();
-
-            return View();
-        }
-
-       
-
-
-
-
 
     }
 }
