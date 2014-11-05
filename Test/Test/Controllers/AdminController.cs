@@ -115,5 +115,20 @@ namespace Test.Controllers
             groupDAO.UpdateGroup(NewName, OldName);
             return RedirectToAction("Groups", "Admin");
         }
+
+
+        //Студенты
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public ActionResult Students()
+        {
+            
+            ViewData["links"] = getLinks();
+            ViewData["functions"] = getFunctions();
+            UserDAO userdao = new UserDAO();
+            string[] names = Roles.GetUsersInRole("Student");
+            List<User> users = (List<User>)userdao.ReadAll(x => (names.Contains(x.Login))).Value;
+            return View(users);
+        }
     }
 }
