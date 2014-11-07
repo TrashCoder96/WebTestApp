@@ -11,7 +11,7 @@
      <table>
          <tr>
              <td>
-                 <input type="text" name="Name" />
+                 <input type="text" name="GroupName" />
              </td>
              <td>
                  <input type="submit" value="Создать" />

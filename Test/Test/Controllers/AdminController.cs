@@ -13,6 +13,7 @@ namespace Test.Controllers
         //
         // GET: /Admin/
         //Запросы
+
         [HttpGet]
         [Authorize(Roles="Admin")]
         public ActionResult Requests()
@@ -20,27 +21,35 @@ namespace Test.Controllers
             ViewData["links"] = getLinks();
             ViewData["functions"] = getFunctions();
             RequestDAO requestdao = new RequestDAO();
-            return View(requestdao.ReadAllRequests(x => (true)).Value);
+            Result result = requestdao.ReadAllRequests(x => (true));
+            if (result.Success)
+                return View(result.Value);
+            else return RedirectToAction("Errors", "Shared");
+
         }
 
         //Отклонить запрос
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public ActionResult Reject(string User, string Role)
+        public ActionResult Reject(string UserLogin, string Role)
         {
             RequestDAO requestdao = new RequestDAO();
-            requestdao.RejectRequest(x => (x.Role == Role && x.User.Login == User));
-            return RedirectToAction("Requests", "Admin");
+            Result result = requestdao.RejectRequest(x => (x.Role == Role && x.User.Login == UserLogin));
+            if (result.Success)
+                return RedirectToAction("Requests", "Admin"); 
+            else return RedirectToAction("Errors", "Shared");
         }
 
         //Принять запрос
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public ActionResult Accept(string User, string Role)
+        public ActionResult Accept(string UserLogin, string Role)
         {
             RequestDAO requestdao = new RequestDAO();
-            requestdao.SatisfyRequest(x => (x.Role == Role && x.User.Login == User));
-            return RedirectToAction("Requests", "Admin");
+            Result result = requestdao.SatisfyRequest(x => (x.Role == Role && x.User.Login == UserLogin));
+            if (result.Success)
+                return RedirectToAction("Requests", "Admin");
+            else return RedirectToAction("Errors", "Shared");
         }
 
 
@@ -51,8 +60,11 @@ namespace Test.Controllers
         {
             ViewData["links"] = getLinks();
             ViewData["functions"] = getFunctions();
-            GroupDAO groupDAO = new GroupDAO();
-            return View(groupDAO.ReadAll(x => (true)).Value);
+            GroupDAO groupdao = new GroupDAO();
+            Result result = groupdao.ReadAll(x => (true));
+            if (result.Success)
+                return View(result.Value);
+            else return RedirectToAction("Errors", "Shared");
         }
 
 
@@ -67,68 +79,69 @@ namespace Test.Controllers
         //Создать группу
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult CreateGroup(string Name)
+        public ActionResult CreateGroup(string GroupName)
         {
-            ViewData["links"] = getLinks();
-            ViewData["functions"] = getFunctions();
             GroupDAO groupDAO = new GroupDAO();
-            groupDAO.CreateGroup(Name);
-            return RedirectToAction("Groups", "Admin");
+            Result result = groupDAO.CreateGroup(GroupName);
+            if (result.Success)
+                return RedirectToAction("Groups", "Admin");
+            else return RedirectToAction("Errors", "Shared");
         }
 
         //Вьюжка для удаления
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public ActionResult DeleteGroupView(string Name)
+        public ActionResult DeleteGroupView(string GroupName)
         {
-            return View((object)Name);
+            return View((object)GroupName);
         }
 
         //Удалить группу
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult DeleteGroup(string Name)
+        public ActionResult DeleteGroup(string GroupName)
         {
-            ViewData["links"] = getLinks();
-            ViewData["functions"] = getFunctions();
             GroupDAO groupDAO = new GroupDAO();
-            groupDAO.DeleteGroup(x => (x.Name == Name));
-            return RedirectToAction("Groups", "Admin");
+            Result result = groupDAO.DeleteGroup(x => (x.Name == GroupName));
+            if (result.Success)
+                return RedirectToAction("Groups", "Admin");
+            else return RedirectToAction("Errors", "Shared");
         }
 
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public ActionResult UpdateGroupView(string Name)
+        public ActionResult UpdateGroupView(string GroupName)
         {
-            return View((object)Name);
+            return View((object)GroupName);
         }
 
         //Обновить группу
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult UpdateGroup(string NewName, string OldName)
+        public ActionResult UpdateGroup(string NewGroupName, string OldGroupName)
         {
-            ViewData["links"] = getLinks();
-            ViewData["functions"] = getFunctions();
             GroupDAO groupDAO = new GroupDAO();
-            groupDAO.UpdateGroup(NewName, OldName);
-            return RedirectToAction("Groups", "Admin");
+            Result result = groupDAO.UpdateGroup(NewGroupName, OldGroupName);
+            if (result.Success)
+                return RedirectToAction("Groups", "Admin");
+            else return RedirectToAction("Errors", "Shared");
         }
 
 
-        //Студенты
+        //Запросы студентов
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public ActionResult Students()
+        public ActionResult StudentRequests()
         {
-            
             ViewData["links"] = getLinks();
             ViewData["functions"] = getFunctions();
             UserDAO userdao = new UserDAO();
             string[] names = Roles.GetUsersInRole("Student");
-            List<User> users = (List<User>)userdao.ReadAll(x => (names.Contains(x.Login))).Value;
-            return View(users);
+            Result result = userdao.ReadAll(x => (names.Contains(x.Login)));
+            if (result.Success)
+                return View(result.Value);
+            else return RedirectToAction("Errors", "Shared");
         }
     }
 }

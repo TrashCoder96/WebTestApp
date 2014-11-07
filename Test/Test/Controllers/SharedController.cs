@@ -34,5 +34,12 @@ namespace Test.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
+        [Authorize]
+        public ActionResult Errors()
+        {
+            return View();
+        }
+
     }
 }

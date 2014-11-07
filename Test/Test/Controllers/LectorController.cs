@@ -80,7 +80,7 @@ namespace Test.Controllers
             ViewData["functions"] = getFunctions();
             DisciplineDAO disciplineDAO = new DisciplineDAO();
             disciplineDAO.RenameDiscipline(NewName, OldName);
-            return RedirectToAction("Discipline", "Lector");
+            return RedirectToAction("Disciplines", "Lector");
         }
 
     }

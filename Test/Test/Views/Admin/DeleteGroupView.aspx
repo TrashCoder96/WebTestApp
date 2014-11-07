@@ -8,7 +8,7 @@
 </head>
 <body>
      <form action="/Admin/DeleteGroup" method="post">
-     <input type="hidden" name="Name" value="<%=Model %>" />
+     <input type="hidden" name="GroupName" value="<%=Model %>" />
      <input type="submit" value="Удалить" />
  </form>
 </body>

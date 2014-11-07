@@ -42,10 +42,10 @@
                 <%=r.Message %>
             </td>
              <td>
-                <%=Html.ActionLink("Принять запрос", "Accept", "Admin", new { User = r.User.Login, Role = r.Role }, null) %>
+                <%=Html.ActionLink("Принять запрос", "Accept", "Admin", new { UserLogin = r.User.Login, Role = r.Role }, null) %>
             </td>
             <td>
-                <%=Html.ActionLink("Отклонить запрос", "Reject", "Admin", new { User = r.User.Login, Role = r.Role }, null) %>
+                <%=Html.ActionLink("Отклонить запрос", "Reject", "Admin", new { UserLogin = r.User.Login, Role = r.Role }, null) %>
             </td>
         </tr>
         <% } %>

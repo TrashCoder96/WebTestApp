@@ -9,7 +9,7 @@
 <p>
     <%: Html.ActionLink("Create New", "Create") %>
 </p>
-<table>
+<table style="border: thin" border="1">
     <tr>
         <th>
             Имя
@@ -23,10 +23,19 @@
         <th>
             Логин
         </th>
-        <th></th>
+        <th>
+
+        </th>
+          <th>
+
+        </th>
+          <th>
+
+        </th>
     </tr>
 
-<% foreach (var item in Model) { %>
+<% foreach (Test.Models.User item in Model)
+   { %>
     <tr>
         <td>
             <%: item.FirstName %>
@@ -41,10 +50,10 @@
             <%: item.Login %>
         </td>
         <td>
-           <%=Html.Action("Добавить в группу") %>
+           
         </td>
         <td>
-
+           
         </td>
         <td>
 

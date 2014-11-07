@@ -14,21 +14,29 @@ namespace Test.Models
         {
             bool Success = true;
             List<Request> requests = new List<Request>();
-            SqlConnection connection = null;
+            SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["ApplicationServices"].ConnectionString);
             SqlDataReader reader = null;
             try
             {
-                connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["ApplicationServices"].ConnectionString);
-                connection.Open();
-                SqlCommand command = new SqlCommand("SELECT aspnet_Users.UserName, aspnet_Roles.RoleName, Request.Message, aspnet_Membership.Email FROM Request, aspnet_Membership, aspnet_Roles, aspnet_Users WHERE Request.UserId = aspnet_Membership.UserId AND aspnet_Membership.UserId = aspnet_Users.UserId AND Request.RoleId = aspnet_Roles.RoleId", connection);
+            connection.Open();
+               UserDAO userdao = new UserDAO();
+            Result result = userdao.ReadAll(x => (true));
+            if (result.Success)
+            {
+                List<User> users = (List<User>)result.Value;
+                SqlCommand command = new SqlCommand("SELECT aspnet_Users.LoweredUserName, aspnet_Roles.RoleName, Request.Message FROM Request, aspnet_Membership, aspnet_Roles, aspnet_Users WHERE Request.UserId = aspnet_Membership.UserId AND aspnet_Membership.UserId = aspnet_Users.UserId AND Request.RoleId = aspnet_Roles.RoleId", connection);
                 command.ExecuteNonQuery();
                 reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    Request request = new Request(new User("f", "l", reader[3].ToString(), reader[0].ToString()), reader[1].ToString(), reader[2].ToString());
+                    User user = users.Find(x => (x.Login.ToString().ToLower() == reader[0].ToString().ToLower()));
+                    Request request = new Request(user, reader[1].ToString(), reader[2].ToString());
                     requests.Add(request);
                 }
                 requests = requests.FindAll(p);
+            }
+            else
+                throw new Exception();  
             }
             catch (SqlException e)
             {

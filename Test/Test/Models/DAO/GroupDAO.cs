@@ -155,7 +155,7 @@ namespace Test.Models
             return new Result(Success, n);
         }
 
-        public Result RemoveStudent(string user, string Name)
+        public Result RemoveStudent(string user)
         {
             bool Success = true;
             SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["ApplicationServices"].ConnectionString);
@@ -165,8 +165,7 @@ namespace Test.Models
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "DELETE FROM [UsersANDGroup] WHERE (SELECT GroupId FROM [Group] WHERE [Group].[Name] LIKE @n) = [UsersANDGroup].[GroupId] AND (SELECT UserId FROM [aspnet_Users] WHERE [aspnet_Users].[LoweredUserName] LIKE @u) = [UsersANDGroup].[UserId]";
-                command.Parameters.Add(new SqlParameter("@n", Name) { SqlDbType = System.Data.SqlDbType.NChar });
+                command.CommandText = "DELETE FROM [UsersANDGroup] WHERE (SELECT GroupId FROM [Group] WHERE (SELECT UserId FROM [aspnet_Users] WHERE [aspnet_Users].[LoweredUserName] LIKE @u) = [UsersANDGroup].[UserId]";
                 command.Parameters.Add(new SqlParameter("@u", user) { SqlDbType = System.Data.SqlDbType.NVarChar });
                 n = command.ExecuteNonQuery();
                 if (n == 0) throw new Exception();
