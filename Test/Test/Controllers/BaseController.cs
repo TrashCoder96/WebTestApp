@@ -44,7 +44,7 @@ namespace Test.Controllers
             if (User.IsInRole("Student"))
             {
                 links.Add(new Models.Link("Take", "Student", "Пройти тест"));
-                links.Add(new Models.Link("StudentRequests", "Student", "Запрос на вступление в группу"));
+                links.Add(new Models.Link("CreateStudentRequestView", "Student", "Запрос на вступление в группу"));
 
             }
 

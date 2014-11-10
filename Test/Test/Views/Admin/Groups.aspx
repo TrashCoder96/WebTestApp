@@ -10,13 +10,13 @@
 <% foreach (Test.Models.Group item in Model) { %>
     <tr>
         <td>
-            <%: item.Name %>
+            <%: item.GroupName %>
         </td>
         <td>
-             <%: Html.Action("UpdateGroupView", "Admin", new { GroupName=item.Name }) %>
+             <%: Html.Action("UpdateGroupView", "Admin", new { GroupName=item.GroupName }) %>
         </td>
         <td>
-             <%: Html.Action("DeleteGroupView", "Admin", new { GroupName=item.Name }) %>
+             <%: Html.Action("DeleteGroupView", "Admin", new { GroupName=item.GroupName }) %>
         </td>
 
     </tr>

@@ -20,8 +20,9 @@ namespace Test.Controllers
             ViewData["links"] = getLinks();
             ViewData["functions"] = getFunctions();
             DisciplineDAO disciplineDAO = new DisciplineDAO();
-            disciplineDAO.ReadAllDisciplines(x => (x.Lector.Login == User.Identity.Name));
-            return View(disciplineDAO.ReadAllDisciplines(x => (x.Lector.Login.ToLower() == User.Identity.Name.ToLower())).Value);
+            ModelContainer data = new ModelContainer();
+            Result result = disciplineDAO.ReadAllDisciplines(x => (x.aspnet_Users.LoweredUserName == User.Identity.Name.ToLower()), data);
+            return View(result.Value);
         }
 
         //Вюжка для Создания дисциплины
@@ -39,9 +40,13 @@ namespace Test.Controllers
         {
             ViewData["links"] = getLinks();
             ViewData["functions"] = getFunctions();
+            ModelContainer data = new ModelContainer();
             DisciplineDAO disciplineDAO = new DisciplineDAO();
-            disciplineDAO.CreateDiscipline(Name, User.Identity.Name);
+            UserDAO userDAO = new UserDAO();
+            IEnumerable<aspnet_Users> users = (IEnumerable<aspnet_Users>)userDAO.ReadAll(x => (x.LoweredUserName == User.Identity.Name.ToLower()), data).Value;
+            Result result = disciplineDAO.CreateDiscipline(Name, users.First(x => (x.LoweredUserName == User.Identity.Name.ToLower())), data);
             return RedirectToAction("Disciplines", "Lector");
+        
         }
 
         //Вьюжка для удаления дисциплины
@@ -59,8 +64,11 @@ namespace Test.Controllers
         {
             ViewData["links"] = getLinks();
             ViewData["functions"] = getFunctions();
+            ModelContainer data = new ModelContainer();
             DisciplineDAO disciplineDAO = new DisciplineDAO();
-            disciplineDAO.DeleteDiscipline(x => (x.Name == Name));
+            UserDAO userDAO = new UserDAO();
+            IEnumerable<aspnet_Users> users = (IEnumerable<aspnet_Users>)userDAO.ReadAll(x => (x.LoweredUserName == User.Identity.Name.ToLower()), data).Value;
+            Result result = disciplineDAO.DeleteDiscipline(x => (x.DisciplineName == Name), data);
             return RedirectToAction("Disciplines", "Lector");
         }
 
@@ -78,8 +86,9 @@ namespace Test.Controllers
         {
             ViewData["links"] = getLinks();
             ViewData["functions"] = getFunctions();
+            ModelContainer data = new ModelContainer();
             DisciplineDAO disciplineDAO = new DisciplineDAO();
-            disciplineDAO.RenameDiscipline(NewName, OldName);
+            disciplineDAO.RenameDiscipline(NewName, OldName, data);
             return RedirectToAction("Disciplines", "Lector");
         }
 

@@ -33,19 +33,19 @@
         { %>
         <tr>
             <td>
-                <%=r.User.Login %>
+                <%=r.aspnet_Users.UserName %>
             </td>
             <td>
-                <%=r.Role %>
+                <%=r.aspnet_Roles.RoleName %>
             </td>
             <td>
                 <%=r.Message %>
             </td>
              <td>
-                <%=Html.ActionLink("Принять запрос", "Accept", "Admin", new { UserLogin = r.User.Login, Role = r.Role }, null) %>
+                <%=Html.ActionLink("Принять запрос", "Accept", "Admin", new { UserLogin = r.aspnet_Users.UserName, Role = r.aspnet_Roles.RoleName }, null) %>
             </td>
             <td>
-                <%=Html.ActionLink("Отклонить запрос", "Reject", "Admin", new { UserLogin = r.User.Login, Role = r.Role }, null) %>
+                <%=Html.ActionLink("Отклонить запрос", "Reject", "Admin", new { UserLogin = r.aspnet_Users.UserName, Role = r.aspnet_Roles.RoleName }, null) %>
             </td>
         </tr>
         <% } %>

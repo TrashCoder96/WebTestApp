@@ -10,13 +10,13 @@
 <% foreach (Test.Models.Discipline item in Model) { %>
     <tr>
         <td>
-            <%: item.Name %>
+            <%: item.DisciplineName %>
         </td>
         <td>
-             <%: Html.Action("UpdateDisciplineView", "Lector", new { Name=item.Name }) %>
+             <%: Html.Action("UpdateDisciplineView", "Lector", new { Name=item.DisciplineName }) %>
         </td>
         <td>
-             <%: Html.Action("DeleteDisciplineView", "Lector", new { Name=item.Name }) %>
+             <%: Html.Action("DeleteDisciplineView", "Lector", new { Name=item.DisciplineName }) %>
         </td>
 
     </tr>

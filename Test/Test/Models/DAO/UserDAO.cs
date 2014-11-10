@@ -9,67 +9,26 @@ namespace Test.Models
 {
     public class UserDAO
     {
-        public Result ReadAll(Predicate<User> p)
+        public Result ReadAll(Func<aspnet_Users, bool> p, ModelContainer data)
         {
-            bool success = true;
-            List<User> users = new List<User>();
-            SqlConnection connection = null;
-            SqlDataReader reader = null;
-            try
-            {
-                connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["ApplicationServices"].ConnectionString);
-                connection.Open();
-                SqlCommand command = new SqlCommand("SELECT EMail, LoweredUserName FROM aspnet_Users, aspnet_Membership WHERE aspnet_Users.UserId = aspnet_Membership.UserId", connection);
-                command.ExecuteNonQuery();
-                reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    User user = new User("fname", "lname", reader[0].ToString(), reader[1].ToString());
-                    users.Add(user);
-                }
-                users = users.FindAll(p);
-            }
-            catch (SqlException e)
-            {
-                success = false;
-            }
-            finally
-            {
-                if (reader != null)
-                    reader.Close();
-                connection.Close();
-            }
-            return new Result(success, users);
+            bool Success = true;
+            IEnumerable<aspnet_Users> users = null;
+            //try
+           // {
+                users = data.aspnet_Users.Select(row => row).Where(p);
+          //  }
+          //  catch (Exception e)
+           // {
+                Success = false;
+           // }
+           // finally
+           // {
+                
+           // }
+            return new Result(Success, users);
         }
+        
 
-        public Result ReadAll(Predicate<User> p, SqlConnection connection)
-        {
-            bool success = true;
-            List<User> users = new List<User>();
-            SqlDataReader reader = null;
-            try
-            {
-                SqlCommand command = new SqlCommand("SELECT EMail, LoweredUserName FROM aspnet_Users, aspnet_Membership WHERE aspnet_Users.UserId = aspnet_Membership.UserId", connection);
-                command.ExecuteNonQuery();
-                reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    User user = new User("fname", "lname", reader[0].ToString(), reader[1].ToString());
-                    users.Add(user);
-                }
-                users = users.FindAll(p);
-            }
-            catch (SqlException e)
-            {
-                success = false;
-            }
-            finally
-            {
-                if (reader != null)
-                    reader.Close();
-                connection.Close();
-            }
-            return new Result(success, users);
-        }
+       
     }
 }

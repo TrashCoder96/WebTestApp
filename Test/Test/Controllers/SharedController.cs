@@ -30,7 +30,11 @@ namespace Test.Controllers
             ViewData["links"] = getLinks();
             ViewData["functions"] = getFunctions();
             RequestDAO requestDAO = new RequestDAO();
-            requestDAO.CreateRequest(User.Identity.Name, role, message);
+            UserDAO userdao = new UserDAO();
+            Test.Models.ModelContainer data = new ModelContainer();
+            IEnumerable<aspnet_Users> users = (IEnumerable<aspnet_Users>)userdao.ReadAll(x => (x.LoweredUserName == User.Identity.Name.ToLower()), data).Value;
+            aspnet_Users user = users.First(x => true);
+            requestDAO.CreateRequest(user , role, message, data);
             return RedirectToAction("Index", "Home");
         }
 

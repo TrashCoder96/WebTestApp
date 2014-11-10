@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Test.Models;
 using System.Web.Security;
+using Test.Models;
 
 namespace Test.Controllers
 {
@@ -20,8 +21,9 @@ namespace Test.Controllers
         {
             ViewData["links"] = getLinks();
             ViewData["functions"] = getFunctions();
+            ModelContainer data = new Models.ModelContainer();
             RequestDAO requestdao = new RequestDAO();
-            Result result = requestdao.ReadAllRequests(x => (true));
+            Result result = requestdao.ReadAllRequests(x => (true), data);
             if (result.Success)
                 return View(result.Value);
             else return RedirectToAction("Errors", "Shared");
@@ -34,7 +36,8 @@ namespace Test.Controllers
         public ActionResult Reject(string UserLogin, string Role)
         {
             RequestDAO requestdao = new RequestDAO();
-            Result result = requestdao.RejectRequest(x => (x.Role == Role && x.User.Login == UserLogin));
+            ModelContainer data = new Models.ModelContainer();
+            Result result = requestdao.RejectRequest(x => (x.aspnet_Users.LoweredUserName == UserLogin.ToLower() && x.aspnet_Roles.RoleName == Role), data);
             if (result.Success)
                 return RedirectToAction("Requests", "Admin"); 
             else return RedirectToAction("Errors", "Shared");
@@ -46,7 +49,8 @@ namespace Test.Controllers
         public ActionResult Accept(string UserLogin, string Role)
         {
             RequestDAO requestdao = new RequestDAO();
-            Result result = requestdao.SatisfyRequest(x => (x.Role == Role && x.User.Login == UserLogin));
+            ModelContainer data = new Models.ModelContainer();
+            Result result = requestdao.SatisfyRequest(x => (x.aspnet_Users.LoweredUserName == UserLogin.ToLower() && x.aspnet_Roles.RoleName == Role), data);
             if (result.Success)
                 return RedirectToAction("Requests", "Admin");
             else return RedirectToAction("Errors", "Shared");
@@ -61,7 +65,8 @@ namespace Test.Controllers
             ViewData["links"] = getLinks();
             ViewData["functions"] = getFunctions();
             GroupDAO groupdao = new GroupDAO();
-            Result result = groupdao.ReadAll(x => (true));
+            ModelContainer data = new Models.ModelContainer();
+            Result result = groupdao.ReadAll(x => (true), data);
             if (result.Success)
                 return View(result.Value);
             else return RedirectToAction("Errors", "Shared");
@@ -82,7 +87,8 @@ namespace Test.Controllers
         public ActionResult CreateGroup(string GroupName)
         {
             GroupDAO groupDAO = new GroupDAO();
-            Result result = groupDAO.CreateGroup(GroupName);
+            ModelContainer data = new Models.ModelContainer();
+            Result result = groupDAO.CreateGroup(GroupName, data);
             if (result.Success)
                 return RedirectToAction("Groups", "Admin");
             else return RedirectToAction("Errors", "Shared");
@@ -102,7 +108,8 @@ namespace Test.Controllers
         public ActionResult DeleteGroup(string GroupName)
         {
             GroupDAO groupDAO = new GroupDAO();
-            Result result = groupDAO.DeleteGroup(x => (x.Name == GroupName));
+            ModelContainer data = new Models.ModelContainer();
+            Result result = groupDAO.DeleteGroup(x => (x.GroupName == GroupName), data);
             if (result.Success)
                 return RedirectToAction("Groups", "Admin");
             else return RedirectToAction("Errors", "Shared");
@@ -122,7 +129,8 @@ namespace Test.Controllers
         public ActionResult UpdateGroup(string NewGroupName, string OldGroupName)
         {
             GroupDAO groupDAO = new GroupDAO();
-            Result result = groupDAO.UpdateGroup(NewGroupName, OldGroupName);
+            ModelContainer data = new Models.ModelContainer();
+            Result result = groupDAO.UpdateGroup(NewGroupName, OldGroupName, data);
             if (result.Success)
                 return RedirectToAction("Groups", "Admin");
             else return RedirectToAction("Errors", "Shared");
@@ -136,11 +144,35 @@ namespace Test.Controllers
         {
             ViewData["links"] = getLinks();
             ViewData["functions"] = getFunctions();
-            UserDAO userdao = new UserDAO();
-            string[] names = Roles.GetUsersInRole("Student");
-            Result result = userdao.ReadAll(x => (names.Contains(x.Login)));
+            ModelContainer data = new Models.ModelContainer();
+            StudentRequestDAO studentdao = new Models.StudentRequestDAO();
+            Result result = studentdao.ReadAllStudentRequests(x => true, data);
             if (result.Success)
                 return View(result.Value);
+            else return RedirectToAction("Errors", "Shared");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public ActionResult AcceptStudentRequest(string UserLogin, string GroupName)
+        {
+            ModelContainer data = new Models.ModelContainer();
+            StudentRequestDAO studentdao = new Models.StudentRequestDAO();
+            Result result = studentdao.SatisfyRequest(x => (x.aspnet_Users.LoweredUserName == UserLogin.ToLower() && x.Group.GroupName == GroupName), data);
+            if (result.Success)
+                return RedirectToAction("Groups", "Admin");
+            else return RedirectToAction("Errors", "Shared");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public ActionResult RejectStudentRequest(string UserLogin, string GroupName)
+        {
+            ModelContainer data = new Models.ModelContainer();
+            StudentRequestDAO studentdao = new Models.StudentRequestDAO();
+            Result result = studentdao.RejectRequest(x => (x.aspnet_Users.LoweredUserName == UserLogin.ToLower() && x.Group.GroupName == GroupName), data);
+            if (result.Success)
+                return RedirectToAction("Groups", "Admin");
             else return RedirectToAction("Errors", "Shared");
         }
     }

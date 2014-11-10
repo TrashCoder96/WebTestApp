@@ -9,176 +9,91 @@ namespace Test.Models
 {
     public class GroupDAO
     {
-        public Result ReadAll(Predicate<Group> p)
+        public Result ReadAll(Func<Group, bool> p, ModelContainer data)
         {
             bool Success = true;
-            List<Group> groups = new List<Group>();
-            SqlConnection connection = null;
-            SqlDataReader reader = null;
+            IEnumerable<Group> groups = null;
             try
             {
-                connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["ApplicationServices"].ConnectionString);
-                connection.Open();
-                SqlCommand command = new SqlCommand("SELECT GroupId, Name FROM [Group]", connection);
-                command.ExecuteNonQuery();
-                reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    Group group = new Group(reader[1].ToString());
-                    groups.Add(group);
-                }
+                groups = data.Groups.Select(row => row).Where(p);
             }
-            catch (SqlException e)
+            catch (Exception e)
             {
                 Success = false;
             }
-            finally
-            {
-                if (reader != null)
-                    reader.Close();
-                connection.Close();
-            }
-            groups = groups.FindAll(p);
             return new Result(Success, groups);
         }
 
-        public Result CreateGroup(string Name)
+        public Result CreateGroup(string Name, ModelContainer data)
         {
             bool Success = true;
-            SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["ApplicationServices"].ConnectionString);
-            SqlCommand command = new SqlCommand();
-            int n = 0;
+            Group g = null;
             try
             {
-            
-                connection.Open();
-                command.Connection = connection;
-                command.CommandText = "INSERT INTO [Group] VALUES(NEWID(), @n)";
-                command.Parameters.Add(new SqlParameter("@n", Name) { SqlDbType = System.Data.SqlDbType.NChar });
-                n = command.ExecuteNonQuery();
-                if (n == 0) throw new Exception();
-
+                g = data.Groups.Create();
+                g.GroupId = Guid.NewGuid();
+                g.GroupName = Name;
+                data.Groups.Add(g);
+                data.SaveChanges();
             }
             catch (Exception e)
             {
                 Success = false;
             }
-            finally
-            {
-                connection.Close();
-            }
-            return new Result(Success, n);
+            return new Result(Success, g);
         }
 
-        public Result UpdateGroup(string NewName, string OldName)
+        public Result UpdateGroup(string NewName, string OldName, ModelContainer data)
         {
             bool Success = true;
-            SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["ApplicationServices"].ConnectionString);
-            SqlCommand command = new SqlCommand();
-            int n = 0;
+            Group g = null;
             try
             {
-                connection.Open();
-                command.Connection = connection;
-                command.CommandText = "UPDATE [Group] SET [Group].Name = @n WHERE [Group].Name LIKE @o";
-                command.Parameters.Add(new SqlParameter("@n", NewName) { SqlDbType = System.Data.SqlDbType.NChar });
-                command.Parameters.Add(new SqlParameter("@o", OldName) { SqlDbType = System.Data.SqlDbType.NChar });
-                n = command.ExecuteNonQuery();
-                if (n == 0) throw new Exception();
-
+                g = data.Groups.First(row => (row.GroupName == OldName));
+                g.GroupName = NewName;
+                data.SaveChanges();
             }
             catch (Exception e)
             {
                 Success = false;
             }
-            finally
-            {
-                connection.Close();
-            }
-            return new Result(Success, n);
+            return new Result(Success, g);
         }
 
-        public Result DeleteGroup(Predicate<Group> p)
+        public Result DeleteGroup(Func<Group, bool> p, ModelContainer data)
         {
             bool Success = true;
-            SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["ApplicationServices"].ConnectionString);
-            SqlCommand command = new SqlCommand();
-            int n = 0;
+            IEnumerable<Group> groups = null;
             try
             {
-                connection.Open();
-                command.Connection = connection;
-                List<Group> gt = (List<Group>)ReadAll(p).Value;
-                foreach (Group g in (List<Group>)ReadAll(p).Value)
-                {
-                    command.CommandText = "DELETE FROM [Group] WHERE [Group].Name LIKE @n";
-                    command.Parameters.Add(new SqlParameter("@n", g.Name) { SqlDbType = System.Data.SqlDbType.NChar });
-                    n = command.ExecuteNonQuery();
-                    if (n == 0) throw new Exception();
-                }
+                groups = data.Groups.Select(row => row).Where(p);
+                foreach (Group g in groups)
+                    data.Groups.Remove(g);
+                data.SaveChanges();
             }
             catch (Exception e)
             {
                 Success = false;
             }
-            finally
-            {
-                connection.Close();
-            }
-            return new Result(Success, n);
+            return new Result(Success, groups);
         }
 
-        public Result AddStudent(string user, string Name)
+        public Result AddStudent(aspnet_Users student, Group group, ModelContainer data)
         {
             bool Success = true;
-            SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["ApplicationServices"].ConnectionString);
-            SqlCommand command = new SqlCommand();
-            int n = 0;
+            IEnumerable<Group> groups = null;
             try
             {
-                connection.Open();
-                command.Connection = connection;
-                command.CommandText = "INSERT INTO [UsersANDGroup] VALUES((SELECT GroupId FROM [Group] WHERE [Group].[Name] LIKE @n), (SELECT UserId FROM [aspnet_Users] WHERE [aspnet_Users].[LoweredUserName] LIKE @u))";
-                command.Parameters.Add(new SqlParameter("@n", Name) { SqlDbType = System.Data.SqlDbType.NChar });
-                command.Parameters.Add(new SqlParameter("@u", user) { SqlDbType = System.Data.SqlDbType.NVarChar });
-                n = command.ExecuteNonQuery();
-                if (n == 0) throw new Exception();
+                foreach (Group g in student.Groups)
+                    g.aspnet_Users.Remove(student);
+                group.aspnet_Users.Add(student);
+                data.SaveChanges();
             }
             catch (Exception e)
             {
                 Success = false;
             }
-            finally
-            {
-                connection.Close();
-            }
-            return new Result(Success, n);
-        }
-
-        public Result RemoveStudent(string user)
-        {
-            bool Success = true;
-            SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["ApplicationServices"].ConnectionString);
-            SqlCommand command = new SqlCommand();
-            int n = 0;
-            try
-            {
-                connection.Open();
-                command.Connection = connection;
-                command.CommandText = "DELETE FROM [UsersANDGroup] WHERE (SELECT GroupId FROM [Group] WHERE (SELECT UserId FROM [aspnet_Users] WHERE [aspnet_Users].[LoweredUserName] LIKE @u) = [UsersANDGroup].[UserId]";
-                command.Parameters.Add(new SqlParameter("@u", user) { SqlDbType = System.Data.SqlDbType.NVarChar });
-                n = command.ExecuteNonQuery();
-                if (n == 0) throw new Exception();
-            }
-            catch (Exception e)
-            {
-                Success = false;
-            }
-            finally
-            {
-                connection.Close();
-            }
-            return new Result(Success, n);
+            return new Result(Success, groups);
         }
     }
 }
