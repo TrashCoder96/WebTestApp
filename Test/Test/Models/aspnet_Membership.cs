@@ -14,6 +14,7 @@ namespace Test.Models
     
     public partial class aspnet_Membership
     {
+        public System.Guid ApplicationId { get; set; }
         public System.Guid UserId { get; set; }
         public string Password { get; set; }
         public int PasswordFormat { get; set; }

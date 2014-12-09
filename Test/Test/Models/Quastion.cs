@@ -21,8 +21,9 @@ namespace Test.Models
     
         public System.Guid QuastionId { get; set; }
         public string Text { get; set; }
+        public System.Guid Test_TestId { get; set; }
     
         public virtual ICollection<Variant> Variants { get; set; }
-        public virtual TestSet TestSet { get; set; }
+        public virtual Test Test { get; set; }
     }
 }

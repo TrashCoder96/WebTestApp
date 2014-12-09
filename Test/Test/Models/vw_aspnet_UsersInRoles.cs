@@ -12,19 +12,9 @@ namespace Test.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TestSet
+    public partial class vw_aspnet_UsersInRoles
     {
-        public TestSet()
-        {
-            this.Quastions = new HashSet<Quastion>();
-            this.Groups = new HashSet<Group>();
-        }
-    
-        public System.Guid TestId { get; set; }
-        public string Name { get; set; }
-    
-        public virtual Discipline Discipline { get; set; }
-        public virtual ICollection<Quastion> Quastions { get; set; }
-        public virtual ICollection<Group> Groups { get; set; }
+        public System.Guid UserId { get; set; }
+        public System.Guid RoleId { get; set; }
     }
 }

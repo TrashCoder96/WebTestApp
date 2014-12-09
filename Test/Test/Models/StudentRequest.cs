@@ -16,6 +16,8 @@ namespace Test.Models
     {
         public System.Guid StudentRequestId { get; set; }
         public string Message { get; set; }
+        public System.Guid Group_GroupId { get; set; }
+        public System.Guid aspnet_Users_UserId { get; set; }
     
         public virtual aspnet_Users aspnet_Users { get; set; }
         public virtual Group Group { get; set; }

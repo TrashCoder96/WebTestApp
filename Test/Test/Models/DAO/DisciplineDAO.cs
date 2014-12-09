@@ -13,7 +13,7 @@ namespace Test.Models
     public class DisciplineDAO
     {
         //методы, выполняющиеся отдельно
-        public Result ReadAllDisciplines(Func<Discipline, bool> p, ModelContainer data)
+        public Res ReadAllDisciplines(Func<Discipline, bool> p, ModelContainer data)
         {
             bool Success = true;
             IEnumerable<Discipline> disciplines = null;
@@ -25,11 +25,10 @@ namespace Test.Models
             {
                 Success = false;
             }
-            
-            return new Result(Success, disciplines);
+            return new Res(Success, disciplines);
         }
 
-        public Result CreateDiscipline(string Name, aspnet_Users user, ModelContainer data)
+        public Res CreateDiscipline(string Name, aspnet_Users user, ModelContainer data)
         {
             bool Success = true;
             Discipline d = null;
@@ -46,11 +45,10 @@ namespace Test.Models
             {
                 Success = false;
             }
-  
-            return new Result(Success, d);
+            return new Res(Success, d);
         }
 
-        public Result RenameDiscipline(string NewName, string OldName, ModelContainer data)
+        public Res RenameDiscipline(string NewName, string OldName, ModelContainer data)
         {
             bool Success = true;
             Discipline d = null;
@@ -65,10 +63,10 @@ namespace Test.Models
                 Success = false;
             }
             
-            return new Result(Success, d);
+            return new Res(Success, d);
         }
 
-        public Result DeleteDiscipline(Func<Discipline, bool> p, ModelContainer data)
+        public Res DeleteDiscipline(Func<Discipline, bool> p, ModelContainer data)
         {
             bool Success = true;
             Discipline d = null;
@@ -84,7 +82,7 @@ namespace Test.Models
                 Success = false;
             }
             
-            return new Result(Success, d);
+            return new Res(Success, d);
         }
 
     }

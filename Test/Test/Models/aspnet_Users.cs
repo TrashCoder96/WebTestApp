@@ -22,8 +22,10 @@ namespace Test.Models
             this.StudentRequests = new HashSet<StudentRequest>();
             this.aspnet_Roles = new HashSet<aspnet_Roles>();
             this.Groups = new HashSet<Group>();
+            this.Results = new HashSet<Result>();
         }
     
+        public System.Guid ApplicationId { get; set; }
         public System.Guid UserId { get; set; }
         public string UserName { get; set; }
         public string LoweredUserName { get; set; }
@@ -40,5 +42,6 @@ namespace Test.Models
         public virtual ICollection<StudentRequest> StudentRequests { get; set; }
         public virtual ICollection<aspnet_Roles> aspnet_Roles { get; set; }
         public virtual ICollection<Group> Groups { get; set; }
+        public virtual ICollection<Result> Results { get; set; }
     }
 }

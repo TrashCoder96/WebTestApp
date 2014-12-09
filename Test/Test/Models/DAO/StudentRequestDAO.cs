@@ -10,7 +10,7 @@ namespace Test.Models
 {
     public class StudentRequestDAO
     {
-        public Result ReadAllStudentRequests(Func<StudentRequest, bool> p, ModelContainer data)
+        public Res ReadAllStudentRequests(Func<StudentRequest, bool> p, ModelContainer data)
         {
             bool Success = true;
             IEnumerable<StudentRequest> requests = null;
@@ -23,37 +23,41 @@ namespace Test.Models
                 Success = false;
             }
 
-            return new Result(Success, requests);
+            return new Res(Success, requests);
         }
 
-        public Result SatisfyRequest(Func<StudentRequest, bool> p, ModelContainer data)
+        public Res SatisfyRequest(Func<StudentRequest, bool> p, ModelContainer data)
         {
             bool Success = true;
             IEnumerable<StudentRequest> requests = null;
            // try
-          //  {
-                requests = data.StudentRequests.Select(row => row).Where(p);
-                foreach (StudentRequest r in requests)
-                {
-                    //удаляем пользователя из всех групп, в которых он состоит
-                    foreach (Group g in r.aspnet_Users.Groups)
-                        g.aspnet_Users.Remove(r.aspnet_Users);
-                    //удаляем пользовательский запрос на вступление
-                    data.StudentRequests.Remove(r);
-                    //добавляем пользователя в группу
-                    r.Group.aspnet_Users.Add(r.aspnet_Users);
-                }
-                data.SaveChanges();
+            //  {
+            requests = data.StudentRequests.Select(row => row).Where(p);
+            List<StudentRequest> list = requests.ToList();
+            int i = requests.Count();
+            foreach (StudentRequest r in list)
+            {
+                //удаляем пользователя из всех групп, в которых он состоит
+                foreach (Group g in r.aspnet_Users.Groups)
+                    g.aspnet_Users.Remove(r.aspnet_Users);
+                
+                //добавляем пользователя в группу
+                r.Group.aspnet_Users.Add(r.aspnet_Users);
+
+                //удаляем пользовательский запрос на вступление
+                data.StudentRequests.Remove(r);
+            }
+            data.SaveChanges();
          //   }
          //   catch (Exception e)
          //   {
          //       Success = false;
           //  }
 
-            return new Result(Success, requests);
+            return new Res(Success, requests);
         }
 
-        public Result RejectRequest(Func<StudentRequest, bool> p, ModelContainer data)
+        public Res RejectRequest(Func<StudentRequest, bool> p, ModelContainer data)
         {
             bool Success = true;
             IEnumerable<StudentRequest> requests = null;
@@ -72,10 +76,10 @@ namespace Test.Models
         //        Success = false;
           //  }
 
-            return new Result(Success, requests);
+            return new Res(Success, requests);
         }
 
-        public Result CreateRequest(aspnet_Users user, Group group, ModelContainer data)
+        public Res CreateRequest(aspnet_Users user, Group group, ModelContainer data)
         {
             bool Success = true;
             IEnumerable<StudentRequest> requests = null;
@@ -94,7 +98,7 @@ namespace Test.Models
                 //Success = false;
            // }
 
-            return new Result(Success, requests);
+            return new Res(Success, requests);
         }
 
     }

@@ -16,13 +16,14 @@ namespace Test.Models
     {
         public Discipline()
         {
-            this.TestSets = new HashSet<TestSet>();
+            this.Tests = new HashSet<Test>();
         }
     
         public System.Guid DisciplineId { get; set; }
         public string DisciplineName { get; set; }
+        public System.Guid aspnet_Users_UserId { get; set; }
     
         public virtual aspnet_Users aspnet_Users { get; set; }
-        public virtual ICollection<TestSet> TestSets { get; set; }
+        public virtual ICollection<Test> Tests { get; set; }
     }
 }

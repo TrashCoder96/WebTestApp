@@ -44,8 +44,18 @@ namespace Test.Models
         public DbSet<Request> Requests { get; set; }
         public DbSet<StudentRequest> StudentRequests { get; set; }
         public DbSet<sysdiagram> sysdiagrams { get; set; }
-        public DbSet<TestSet> TestSets { get; set; }
+        public DbSet<Test> Tests { get; set; }
         public DbSet<Variant> Variants { get; set; }
+        public DbSet<vw_aspnet_Applications> vw_aspnet_Applications { get; set; }
+        public DbSet<vw_aspnet_MembershipUsers> vw_aspnet_MembershipUsers { get; set; }
+        public DbSet<vw_aspnet_Profiles> vw_aspnet_Profiles { get; set; }
+        public DbSet<vw_aspnet_Roles> vw_aspnet_Roles { get; set; }
+        public DbSet<vw_aspnet_Users> vw_aspnet_Users { get; set; }
+        public DbSet<vw_aspnet_UsersInRoles> vw_aspnet_UsersInRoles { get; set; }
+        public DbSet<vw_aspnet_WebPartState_Paths> vw_aspnet_WebPartState_Paths { get; set; }
+        public DbSet<vw_aspnet_WebPartState_Shared> vw_aspnet_WebPartState_Shared { get; set; }
+        public DbSet<vw_aspnet_WebPartState_User> vw_aspnet_WebPartState_User { get; set; }
+        public DbSet<Result> Results { get; set; }
     
         public virtual ObjectResult<string> aspnet_AnyDataInTables(Nullable<int> tablesToCheck)
         {

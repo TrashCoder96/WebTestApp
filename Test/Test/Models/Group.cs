@@ -17,7 +17,7 @@ namespace Test.Models
         public Group()
         {
             this.StudentRequests = new HashSet<StudentRequest>();
-            this.TestSets = new HashSet<TestSet>();
+            this.Tests = new HashSet<Test>();
             this.aspnet_Users = new HashSet<aspnet_Users>();
         }
     
@@ -25,7 +25,7 @@ namespace Test.Models
         public string GroupName { get; set; }
     
         public virtual ICollection<StudentRequest> StudentRequests { get; set; }
-        public virtual ICollection<TestSet> TestSets { get; set; }
+        public virtual ICollection<Test> Tests { get; set; }
         public virtual ICollection<aspnet_Users> aspnet_Users { get; set; }
     }
 }

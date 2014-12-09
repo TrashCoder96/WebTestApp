@@ -1,20 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="student22ModelStoreContainer" CdmEntityContainer="ModelContainer1">
+  <EntityContainerMapping StorageEntityContainer="student22ModelStoreContainer" CdmEntityContainer="Entities">
     <EntitySetMapping Name="aspnet_Applications">
-      <EntityTypeMapping TypeName="student22Model.aspnet_Applications">
+      <EntityTypeMapping TypeName="IsTypeOf(student22Model.aspnet_Applications)">
         <MappingFragment StoreEntitySet="aspnet_Applications">
+          <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
           <ScalarProperty Name="ApplicationName" ColumnName="ApplicationName" />
           <ScalarProperty Name="LoweredApplicationName" ColumnName="LoweredApplicationName" />
-          <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
           <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="aspnet_Membership">
-      <EntityTypeMapping TypeName="student22Model.aspnet_Membership">
+      <EntityTypeMapping TypeName="IsTypeOf(student22Model.aspnet_Membership)">
         <MappingFragment StoreEntitySet="aspnet_Membership">
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="PasswordFormat" ColumnName="PasswordFormat" />
           <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
@@ -38,16 +39,17 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="aspnet_Paths">
-      <EntityTypeMapping TypeName="student22Model.aspnet_Paths">
+      <EntityTypeMapping TypeName="IsTypeOf(student22Model.aspnet_Paths)">
         <MappingFragment StoreEntitySet="aspnet_Paths">
           <ScalarProperty Name="PathId" ColumnName="PathId" />
+          <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
           <ScalarProperty Name="Path" ColumnName="Path" />
           <ScalarProperty Name="LoweredPath" ColumnName="LoweredPath" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="aspnet_PersonalizationAllUsers">
-      <EntityTypeMapping TypeName="student22Model.aspnet_PersonalizationAllUsers">
+      <EntityTypeMapping TypeName="IsTypeOf(student22Model.aspnet_PersonalizationAllUsers)">
         <MappingFragment StoreEntitySet="aspnet_PersonalizationAllUsers">
           <ScalarProperty Name="PathId" ColumnName="PathId" />
           <ScalarProperty Name="PageSettings" ColumnName="PageSettings" />
@@ -56,16 +58,18 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="aspnet_PersonalizationPerUser">
-      <EntityTypeMapping TypeName="student22Model.aspnet_PersonalizationPerUser">
+      <EntityTypeMapping TypeName="IsTypeOf(student22Model.aspnet_PersonalizationPerUser)">
         <MappingFragment StoreEntitySet="aspnet_PersonalizationPerUser">
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PathId" ColumnName="PathId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="PageSettings" ColumnName="PageSettings" />
           <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="aspnet_Profile">
-      <EntityTypeMapping TypeName="student22Model.aspnet_Profile">
+      <EntityTypeMapping TypeName="IsTypeOf(student22Model.aspnet_Profile)">
         <MappingFragment StoreEntitySet="aspnet_Profile">
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="PropertyNames" ColumnName="PropertyNames" />
@@ -76,9 +80,10 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="aspnet_Roles">
-      <EntityTypeMapping TypeName="student22Model.aspnet_Roles">
+      <EntityTypeMapping TypeName="IsTypeOf(student22Model.aspnet_Roles)">
         <MappingFragment StoreEntitySet="aspnet_Roles">
           <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
           <ScalarProperty Name="RoleName" ColumnName="RoleName" />
           <ScalarProperty Name="LoweredRoleName" ColumnName="LoweredRoleName" />
           <ScalarProperty Name="Description" ColumnName="Description" />
@@ -86,7 +91,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="aspnet_SchemaVersions">
-      <EntityTypeMapping TypeName="student22Model.aspnet_SchemaVersions">
+      <EntityTypeMapping TypeName="IsTypeOf(student22Model.aspnet_SchemaVersions)">
         <MappingFragment StoreEntitySet="aspnet_SchemaVersions">
           <ScalarProperty Name="Feature" ColumnName="Feature" />
           <ScalarProperty Name="CompatibleSchemaVersion" ColumnName="CompatibleSchemaVersion" />
@@ -95,9 +100,10 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="aspnet_Users">
-      <EntityTypeMapping TypeName="student22Model.aspnet_Users">
+      <EntityTypeMapping TypeName="IsTypeOf(student22Model.aspnet_Users)">
         <MappingFragment StoreEntitySet="aspnet_Users">
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
           <ScalarProperty Name="LoweredUserName" ColumnName="LoweredUserName" />
           <ScalarProperty Name="MobileAlias" ColumnName="MobileAlias" />
@@ -107,7 +113,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="aspnet_WebEvent_Events">
-      <EntityTypeMapping TypeName="student22Model.aspnet_WebEvent_Events">
+      <EntityTypeMapping TypeName="IsTypeOf(student22Model.aspnet_WebEvent_Events)">
         <MappingFragment StoreEntitySet="aspnet_WebEvent_Events">
           <ScalarProperty Name="EventId" ColumnName="EventId" />
           <ScalarProperty Name="EventTimeUtc" ColumnName="EventTimeUtc" />
@@ -127,210 +133,223 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Disciplines">
-      <EntityTypeMapping TypeName="student22Model.Discipline">
-        <MappingFragment StoreEntitySet="Discipline">
-          <ScalarProperty Name="DisciplineId" ColumnName="DisciplineId" />
-          <ScalarProperty Name="DisciplineName" ColumnName="DisciplineName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Groups">
-      <EntityTypeMapping TypeName="student22Model.Group">
-        <MappingFragment StoreEntitySet="Group">
-          <ScalarProperty Name="GroupId" ColumnName="GroupId" />
-          <ScalarProperty Name="GroupName" ColumnName="GroupName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Quastions">
-      <EntityTypeMapping TypeName="student22Model.Quastion">
-        <MappingFragment StoreEntitySet="Quastion">
-          <ScalarProperty Name="QuastionId" ColumnName="QuastionId" />
-          <ScalarProperty Name="Text" ColumnName="Text" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Requests">
-      <EntityTypeMapping TypeName="student22Model.Request">
-        <MappingFragment StoreEntitySet="Request">
-          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
-          <ScalarProperty Name="Message" ColumnName="Message" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="StudentRequests">
-      <EntityTypeMapping TypeName="student22Model.StudentRequest">
-        <MappingFragment StoreEntitySet="StudentRequest">
-          <ScalarProperty Name="StudentRequestId" ColumnName="StudentRequestId" />
-          <ScalarProperty Name="Message" ColumnName="Message" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="sysdiagrams">
-      <EntityTypeMapping TypeName="student22Model.sysdiagram">
+      <EntityTypeMapping TypeName="IsTypeOf(student22Model.sysdiagram)">
         <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
           <ScalarProperty Name="version" ColumnName="version" />
           <ScalarProperty Name="definition" ColumnName="definition" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="TestSets">
-      <EntityTypeMapping TypeName="student22Model.TestSet">
-        <MappingFragment StoreEntitySet="TestSet">
-          <ScalarProperty Name="TestId" ColumnName="TestId" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Variants">
-      <EntityTypeMapping TypeName="student22Model.Variant">
-        <MappingFragment StoreEntitySet="Variant">
-          <ScalarProperty Name="VariantId" ColumnName="VariantId" />
-          <ScalarProperty Name="Text" ColumnName="Text" />
-          <ScalarProperty Name="IsValid" ColumnName="IsValid" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <AssociationSetMapping Name="FK__aspnet_Me__Appli__6319B466" TypeName="student22Model.FK__aspnet_Me__Appli__6319B466" StoreEntitySet="aspnet_Membership">
-      <EndProperty Name="aspnet_Applications">
-        <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
-      </EndProperty>
-      <EndProperty Name="aspnet_Membership">
-        <ScalarProperty Name="UserId" ColumnName="UserId" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="FK__aspnet_Pa__Appli__10E07F16" TypeName="student22Model.FK__aspnet_Pa__Appli__10E07F16" StoreEntitySet="aspnet_Paths">
-      <EndProperty Name="aspnet_Applications">
-        <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
-      </EndProperty>
-      <EndProperty Name="aspnet_Paths">
-        <ScalarProperty Name="PathId" ColumnName="PathId" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="FK__aspnet_Ro__Appli__7FB5F314" TypeName="student22Model.FK__aspnet_Ro__Appli__7FB5F314" StoreEntitySet="aspnet_Roles">
-      <EndProperty Name="aspnet_Applications">
-        <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
-      </EndProperty>
-      <EndProperty Name="aspnet_Roles">
-        <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="FK__aspnet_Us__Appli__54CB950F" TypeName="student22Model.FK__aspnet_Us__Appli__54CB950F" StoreEntitySet="aspnet_Users">
-      <EndProperty Name="aspnet_Applications">
-        <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
-      </EndProperty>
-      <EndProperty Name="aspnet_Users">
-        <ScalarProperty Name="UserId" ColumnName="UserId" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="FK__aspnet_Pe__PathI__1A69E950" TypeName="student22Model.FK__aspnet_Pe__PathI__1A69E950" StoreEntitySet="aspnet_PersonalizationPerUser">
-      <EndProperty Name="aspnet_Paths">
-        <ScalarProperty Name="PathId" ColumnName="PathId" />
-      </EndProperty>
-      <EndProperty Name="aspnet_PersonalizationPerUser">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-      <Condition IsNull="false" ColumnName="PathId" />
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="FK__aspnet_Pe__UserI__1B5E0D89" TypeName="student22Model.FK__aspnet_Pe__UserI__1B5E0D89" StoreEntitySet="aspnet_PersonalizationPerUser">
-      <EndProperty Name="aspnet_Users">
-        <ScalarProperty Name="UserId" ColumnName="UserId" />
-      </EndProperty>
-      <EndProperty Name="aspnet_PersonalizationPerUser">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-      <Condition IsNull="false" ColumnName="UserId" />
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="FK_RequestSet_aspnet_Roles" TypeName="student22Model.FK_RequestSet_aspnet_Roles" StoreEntitySet="Request">
-      <EndProperty Name="aspnet_Roles">
-        <ScalarProperty Name="RoleId" ColumnName="aspnet_Roles_RoleId" />
-      </EndProperty>
-      <EndProperty Name="Request">
-        <ScalarProperty Name="RequestId" ColumnName="RequestId" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="FK_DisciplineSet_aspnet_Users" TypeName="student22Model.FK_DisciplineSet_aspnet_Users" StoreEntitySet="Discipline">
-      <EndProperty Name="aspnet_Users">
-        <ScalarProperty Name="UserId" ColumnName="aspnet_Users_UserId" />
-      </EndProperty>
-      <EndProperty Name="Discipline">
-        <ScalarProperty Name="DisciplineId" ColumnName="DisciplineId" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="FK_RequestSet_aspnet_Users" TypeName="student22Model.FK_RequestSet_aspnet_Users" StoreEntitySet="Request">
-      <EndProperty Name="aspnet_Users">
-        <ScalarProperty Name="UserId" ColumnName="aspnet_Users_UserId" />
-      </EndProperty>
-      <EndProperty Name="Request">
-        <ScalarProperty Name="RequestId" ColumnName="RequestId" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="FK_StudentRequestSet_aspnet_Users" TypeName="student22Model.FK_StudentRequestSet_aspnet_Users" StoreEntitySet="StudentRequest">
-      <EndProperty Name="aspnet_Users">
-        <ScalarProperty Name="UserId" ColumnName="aspnet_Users_UserId" />
-      </EndProperty>
-      <EndProperty Name="StudentRequest">
-        <ScalarProperty Name="StudentRequestId" ColumnName="StudentRequestId" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="FK_DisciplineTest" TypeName="student22Model.FK_DisciplineTest" StoreEntitySet="TestSet">
-      <EndProperty Name="Discipline">
-        <ScalarProperty Name="DisciplineId" ColumnName="Discipline_DisciplineId" />
-      </EndProperty>
-      <EndProperty Name="TestSet">
-        <ScalarProperty Name="TestId" ColumnName="TestId" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="FK_GroupStudentRequest" TypeName="student22Model.FK_GroupStudentRequest" StoreEntitySet="StudentRequest">
-      <EndProperty Name="Group">
-        <ScalarProperty Name="GroupId" ColumnName="Group_GroupId" />
-      </EndProperty>
-      <EndProperty Name="StudentRequest">
-        <ScalarProperty Name="StudentRequestId" ColumnName="StudentRequestId" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="FK_QuastionVariant" TypeName="student22Model.FK_QuastionVariant" StoreEntitySet="Variant">
-      <EndProperty Name="Quastion">
-        <ScalarProperty Name="QuastionId" ColumnName="Quastion_QuastionId" />
-      </EndProperty>
-      <EndProperty Name="Variant">
-        <ScalarProperty Name="VariantId" ColumnName="VariantId" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="FK_TestQuastion" TypeName="student22Model.FK_TestQuastion" StoreEntitySet="Quastion">
-      <EndProperty Name="TestSet">
-        <ScalarProperty Name="TestId" ColumnName="Test_TestId" />
-      </EndProperty>
-      <EndProperty Name="Quastion">
-        <ScalarProperty Name="QuastionId" ColumnName="QuastionId" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="aspnet_UsersInRoles" TypeName="student22Model.aspnet_UsersInRoles" StoreEntitySet="aspnet_UsersInRoles">
-      <EndProperty Name="aspnet_Roles">
-        <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-      </EndProperty>
-      <EndProperty Name="aspnet_Users">
-        <ScalarProperty Name="UserId" ColumnName="UserId" />
-      </EndProperty>
-    </AssociationSetMapping>
+    <AssociationSetMapping Name="aspnet_UsersInRoles" TypeName="student22Model.aspnet_UsersInRoles" StoreEntitySet="aspnet_UsersInRoles" />
     <AssociationSetMapping Name="GroupTest" TypeName="student22Model.GroupTest" StoreEntitySet="GroupTest">
       <EndProperty Name="Group">
         <ScalarProperty Name="GroupId" ColumnName="Groups_GroupId" />
       </EndProperty>
-      <EndProperty Name="TestSet">
+      <EndProperty Name="Test">
         <ScalarProperty Name="TestId" ColumnName="Tests_TestId" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="GroupUser" TypeName="student22Model.GroupUser" StoreEntitySet="GroupUser">
+    <AssociationSetMapping Name="GroupUser" TypeName="student22Model.GroupUser" StoreEntitySet="GroupUser" />
+    <EntitySetMapping Name="Discipline1">
+      <EntityTypeMapping TypeName="student22Model.Discipline1">
+        <MappingFragment StoreEntitySet="Discipline">
+          <ScalarProperty Name="aspnet_Users_UserId" ColumnName="aspnet_Users_UserId" />
+          <ScalarProperty Name="DisciplineName" ColumnName="DisciplineName" />
+          <ScalarProperty Name="DisciplineId" ColumnName="DisciplineId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Group1">
+      <EntityTypeMapping TypeName="student22Model.Group1">
+        <MappingFragment StoreEntitySet="Group">
+          <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+          <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Quastion1">
+      <EntityTypeMapping TypeName="student22Model.Quastion1">
+        <MappingFragment StoreEntitySet="Quastion">
+          <ScalarProperty Name="Test_TestId" ColumnName="Test_TestId" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="QuastionId" ColumnName="QuastionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Request1">
+      <EntityTypeMapping TypeName="student22Model.Request1">
+        <MappingFragment StoreEntitySet="Request">
+          <ScalarProperty Name="aspnet_Users_UserId" ColumnName="aspnet_Users_UserId" />
+          <ScalarProperty Name="aspnet_Roles_RoleId" ColumnName="aspnet_Roles_RoleId" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StudentRequest1">
+      <EntityTypeMapping TypeName="student22Model.StudentRequest1">
+        <MappingFragment StoreEntitySet="StudentRequest">
+          <ScalarProperty Name="aspnet_Users_UserId" ColumnName="aspnet_Users_UserId" />
+          <ScalarProperty Name="Group_GroupId" ColumnName="Group_GroupId" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="StudentRequestId" ColumnName="StudentRequestId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Test1">
+      <EntityTypeMapping TypeName="student22Model.Test1">
+        <MappingFragment StoreEntitySet="Test">
+          <ScalarProperty Name="Discipline_DisciplineId" ColumnName="Discipline_DisciplineId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="TestId" ColumnName="TestId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Variant1">
+      <EntityTypeMapping TypeName="student22Model.Variant1">
+        <MappingFragment StoreEntitySet="Variant">
+          <ScalarProperty Name="Quastion_QuastionId" ColumnName="Quastion_QuastionId" />
+          <ScalarProperty Name="IsValid" ColumnName="IsValid" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="VariantId" ColumnName="VariantId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_aspnet_Applications">
+      <EntityTypeMapping TypeName="student22Model.vw_aspnet_Applications">
+        <MappingFragment StoreEntitySet="vw_aspnet_Applications">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+          <ScalarProperty Name="LoweredApplicationName" ColumnName="LoweredApplicationName" />
+          <ScalarProperty Name="ApplicationName" ColumnName="ApplicationName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_aspnet_MembershipUsers">
+      <EntityTypeMapping TypeName="student22Model.vw_aspnet_MembershipUsers">
+        <MappingFragment StoreEntitySet="vw_aspnet_MembershipUsers">
+          <ScalarProperty Name="LastActivityDate" ColumnName="LastActivityDate" />
+          <ScalarProperty Name="IsAnonymous" ColumnName="IsAnonymous" />
+          <ScalarProperty Name="MobileAlias" ColumnName="MobileAlias" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="FailedPasswordAnswerAttemptWindowStart" ColumnName="FailedPasswordAnswerAttemptWindowStart" />
+          <ScalarProperty Name="FailedPasswordAnswerAttemptCount" ColumnName="FailedPasswordAnswerAttemptCount" />
+          <ScalarProperty Name="FailedPasswordAttemptWindowStart" ColumnName="FailedPasswordAttemptWindowStart" />
+          <ScalarProperty Name="FailedPasswordAttemptCount" ColumnName="FailedPasswordAttemptCount" />
+          <ScalarProperty Name="LastLockoutDate" ColumnName="LastLockoutDate" />
+          <ScalarProperty Name="LastPasswordChangedDate" ColumnName="LastPasswordChangedDate" />
+          <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="IsLockedOut" ColumnName="IsLockedOut" />
+          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+          <ScalarProperty Name="PasswordAnswer" ColumnName="PasswordAnswer" />
+          <ScalarProperty Name="PasswordQuestion" ColumnName="PasswordQuestion" />
+          <ScalarProperty Name="LoweredEmail" ColumnName="LoweredEmail" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="MobilePIN" ColumnName="MobilePIN" />
+          <ScalarProperty Name="PasswordFormat" ColumnName="PasswordFormat" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_aspnet_Profiles">
+      <EntityTypeMapping TypeName="student22Model.vw_aspnet_Profiles">
+        <MappingFragment StoreEntitySet="vw_aspnet_Profiles">
+          <ScalarProperty Name="DataSize" ColumnName="DataSize" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_aspnet_Roles">
+      <EntityTypeMapping TypeName="student22Model.vw_aspnet_Roles">
+        <MappingFragment StoreEntitySet="vw_aspnet_Roles">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="LoweredRoleName" ColumnName="LoweredRoleName" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_aspnet_Users">
+      <EntityTypeMapping TypeName="student22Model.vw_aspnet_Users">
+        <MappingFragment StoreEntitySet="vw_aspnet_Users">
+          <ScalarProperty Name="LastActivityDate" ColumnName="LastActivityDate" />
+          <ScalarProperty Name="IsAnonymous" ColumnName="IsAnonymous" />
+          <ScalarProperty Name="MobileAlias" ColumnName="MobileAlias" />
+          <ScalarProperty Name="LoweredUserName" ColumnName="LoweredUserName" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_aspnet_UsersInRoles">
+      <EntityTypeMapping TypeName="student22Model.vw_aspnet_UsersInRoles">
+        <MappingFragment StoreEntitySet="vw_aspnet_UsersInRoles">
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_aspnet_WebPartState_Paths">
+      <EntityTypeMapping TypeName="student22Model.vw_aspnet_WebPartState_Paths">
+        <MappingFragment StoreEntitySet="vw_aspnet_WebPartState_Paths">
+          <ScalarProperty Name="LoweredPath" ColumnName="LoweredPath" />
+          <ScalarProperty Name="Path" ColumnName="Path" />
+          <ScalarProperty Name="PathId" ColumnName="PathId" />
+          <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_aspnet_WebPartState_Shared">
+      <EntityTypeMapping TypeName="student22Model.vw_aspnet_WebPartState_Shared">
+        <MappingFragment StoreEntitySet="vw_aspnet_WebPartState_Shared">
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="DataSize" ColumnName="DataSize" />
+          <ScalarProperty Name="PathId" ColumnName="PathId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_aspnet_WebPartState_User">
+      <EntityTypeMapping TypeName="student22Model.vw_aspnet_WebPartState_User">
+        <MappingFragment StoreEntitySet="vw_aspnet_WebPartState_User">
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="DataSize" ColumnName="DataSize" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="PathId" ColumnName="PathId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="aspnet_UsersInRoles1" TypeName="student22Model.aspnet_UsersInRoles1" StoreEntitySet="aspnet_UsersInRoles">
       <EndProperty Name="aspnet_Users">
         <ScalarProperty Name="UserId" ColumnName="UserId" />
       </EndProperty>
-      <EndProperty Name="Group">
+      <EndProperty Name="aspnet_Roles">
+        <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="GroupTest1" TypeName="student22Model.GroupTest1" StoreEntitySet="GroupTest">
+      <EndProperty Name="Test1">
+        <ScalarProperty Name="TestId" ColumnName="Tests_TestId" />
+      </EndProperty>
+      <EndProperty Name="Group1">
+        <ScalarProperty Name="GroupId" ColumnName="Groups_GroupId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="GroupUser1" TypeName="student22Model.GroupUser1" StoreEntitySet="GroupUser">
+      <EndProperty Name="Group1">
         <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+      </EndProperty>
+      <EndProperty Name="aspnet_Users">
+        <ScalarProperty Name="UserId" ColumnName="UserId" />
       </EndProperty>
     </AssociationSetMapping>
     <FunctionImportMapping FunctionImportName="aspnet_AnyDataInTables" FunctionName="student22Model.Store.aspnet_AnyDataInTables" />

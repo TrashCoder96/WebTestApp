@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="student22Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="student22Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="aspnet_Applications">
           <Key>
             <PropertyRef Name="ApplicationId" />
@@ -184,6 +184,15 @@
           <Property Name="aspnet_Roles_RoleId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="aspnet_Users_UserId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
+        <EntityType Name="Result">
+          <Key>
+            <PropertyRef Name="TestId" />
+            <PropertyRef Name="aspnet_Users_UserId" />
+          </Key>
+          <Property Name="TestId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="aspnet_Users_UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Result" Type="int" />
+        </EntityType>
         <EntityType Name="StudentRequest">
           <Key>
             <PropertyRef Name="StudentRequestId" />
@@ -203,7 +212,7 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
-        <EntityType Name="TestSet">
+        <EntityType Name="Test">
           <Key>
             <PropertyRef Name="TestId" />
           </Key>
@@ -219,6 +228,155 @@
           <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
           <Property Name="IsValid" Type="bit" Nullable="false" />
           <Property Name="Quastion_QuastionId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'student22.dbo.vw_aspnet_Applications' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_aspnet_Applications">
+          <Key>
+            <PropertyRef Name="ApplicationName" />
+            <PropertyRef Name="LoweredApplicationName" />
+            <PropertyRef Name="ApplicationId" />
+          </Key>
+          <Property Name="ApplicationName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="LoweredApplicationName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="ApplicationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'student22.dbo.vw_aspnet_MembershipUsers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_aspnet_MembershipUsers">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="PasswordFormat" />
+            <PropertyRef Name="IsApproved" />
+            <PropertyRef Name="IsLockedOut" />
+            <PropertyRef Name="CreateDate" />
+            <PropertyRef Name="LastLoginDate" />
+            <PropertyRef Name="LastPasswordChangedDate" />
+            <PropertyRef Name="LastLockoutDate" />
+            <PropertyRef Name="FailedPasswordAttemptCount" />
+            <PropertyRef Name="FailedPasswordAttemptWindowStart" />
+            <PropertyRef Name="FailedPasswordAnswerAttemptCount" />
+            <PropertyRef Name="FailedPasswordAnswerAttemptWindowStart" />
+            <PropertyRef Name="ApplicationId" />
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="IsAnonymous" />
+            <PropertyRef Name="LastActivityDate" />
+          </Key>
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PasswordFormat" Type="int" Nullable="false" />
+          <Property Name="MobilePIN" Type="nvarchar" MaxLength="16" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="LoweredEmail" Type="nvarchar" MaxLength="256" />
+          <Property Name="PasswordQuestion" Type="nvarchar" MaxLength="256" />
+          <Property Name="PasswordAnswer" Type="nvarchar" MaxLength="128" />
+          <Property Name="IsApproved" Type="bit" Nullable="false" />
+          <Property Name="IsLockedOut" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="LastLoginDate" Type="datetime" Nullable="false" />
+          <Property Name="LastPasswordChangedDate" Type="datetime" Nullable="false" />
+          <Property Name="LastLockoutDate" Type="datetime" Nullable="false" />
+          <Property Name="FailedPasswordAttemptCount" Type="int" Nullable="false" />
+          <Property Name="FailedPasswordAttemptWindowStart" Type="datetime" Nullable="false" />
+          <Property Name="FailedPasswordAnswerAttemptCount" Type="int" Nullable="false" />
+          <Property Name="FailedPasswordAnswerAttemptWindowStart" Type="datetime" Nullable="false" />
+          <Property Name="Comment" Type="ntext" />
+          <Property Name="ApplicationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="MobileAlias" Type="nvarchar" MaxLength="16" />
+          <Property Name="IsAnonymous" Type="bit" Nullable="false" />
+          <Property Name="LastActivityDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'student22.dbo.vw_aspnet_Profiles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_aspnet_Profiles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="LastUpdatedDate" />
+          </Key>
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="DataSize" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'student22.dbo.vw_aspnet_Roles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_aspnet_Roles">
+          <Key>
+            <PropertyRef Name="ApplicationId" />
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="RoleName" />
+            <PropertyRef Name="LoweredRoleName" />
+          </Key>
+          <Property Name="ApplicationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="LoweredRoleName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'student22.dbo.vw_aspnet_Users' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_aspnet_Users">
+          <Key>
+            <PropertyRef Name="ApplicationId" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="LoweredUserName" />
+            <PropertyRef Name="IsAnonymous" />
+            <PropertyRef Name="LastActivityDate" />
+          </Key>
+          <Property Name="ApplicationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="LoweredUserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="MobileAlias" Type="nvarchar" MaxLength="16" />
+          <Property Name="IsAnonymous" Type="bit" Nullable="false" />
+          <Property Name="LastActivityDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'student22.dbo.vw_aspnet_UsersInRoles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_aspnet_UsersInRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'student22.dbo.vw_aspnet_WebPartState_Paths' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_aspnet_WebPartState_Paths">
+          <Key>
+            <PropertyRef Name="ApplicationId" />
+            <PropertyRef Name="PathId" />
+            <PropertyRef Name="Path" />
+            <PropertyRef Name="LoweredPath" />
+          </Key>
+          <Property Name="ApplicationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PathId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Path" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="LoweredPath" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'student22.dbo.vw_aspnet_WebPartState_Shared' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_aspnet_WebPartState_Shared">
+          <Key>
+            <PropertyRef Name="PathId" />
+            <PropertyRef Name="LastUpdatedDate" />
+          </Key>
+          <Property Name="PathId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DataSize" Type="int" />
+          <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'student22.dbo.vw_aspnet_WebPartState_User' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_aspnet_WebPartState_User">
+          <Key>
+            <PropertyRef Name="LastUpdatedDate" />
+          </Key>
+          <Property Name="PathId" Type="uniqueidentifier" />
+          <Property Name="UserId" Type="uniqueidentifier" />
+          <Property Name="DataSize" Type="int" />
+          <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="FK__aspnet_Me__Appli__6319B466">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
@@ -366,12 +524,12 @@
         </Association>
         <Association Name="FK_DisciplineTest">
           <End Role="Discipline" Type="Self.Discipline" Multiplicity="1" />
-          <End Role="TestSet" Type="Self.TestSet" Multiplicity="*" />
+          <End Role="Test" Type="Self.Test" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Discipline">
               <PropertyRef Name="DisciplineId" />
             </Principal>
-            <Dependent Role="TestSet">
+            <Dependent Role="Test">
               <PropertyRef Name="Discipline_DisciplineId" />
             </Dependent>
           </ReferentialConstraint>
@@ -401,10 +559,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_GroupTest_Test">
-          <End Role="TestSet" Type="Self.TestSet" Multiplicity="1" />
+          <End Role="Test" Type="Self.Test" Multiplicity="1" />
           <End Role="GroupTest" Type="Self.GroupTest" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TestSet">
+            <Principal Role="Test">
               <PropertyRef Name="TestId" />
             </Principal>
             <Dependent Role="GroupTest">
@@ -472,6 +630,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Result_aspnet_Users">
+          <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
+          <End Role="Result" Type="Self.Result" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Result">
+              <PropertyRef Name="aspnet_Users_UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Result_Test">
+          <End Role="Test" Type="Self.Test" Multiplicity="1" />
+          <End Role="Result" Type="Self.Result" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="TestId" />
+            </Principal>
+            <Dependent Role="Result">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_StudentRequestSet_aspnet_Users">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
           <End Role="StudentRequest" Type="Self.StudentRequest" Multiplicity="*" />
@@ -485,10 +667,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TestQuastion">
-          <End Role="TestSet" Type="Self.TestSet" Multiplicity="1" />
+          <End Role="Test" Type="Self.Test" Multiplicity="1" />
           <End Role="Quastion" Type="Self.Quastion" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TestSet">
+            <Principal Role="Test">
               <PropertyRef Name="TestId" />
             </Principal>
             <Dependent Role="Quastion">
@@ -876,10 +1058,102 @@
           <EntitySet Name="GroupUser" EntityType="Self.GroupUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Quastion" EntityType="Self.Quastion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Request" EntityType="Self.Request" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Result" EntityType="Self.Result" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudentRequest" EntityType="Self.StudentRequest" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TestSet" EntityType="Self.TestSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Test" EntityType="Self.Test" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Variant" EntityType="Self.Variant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vw_aspnet_Applications" EntityType="Self.vw_aspnet_Applications" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[vw_aspnet_Applications].[ApplicationName] AS [ApplicationName], 
+[vw_aspnet_Applications].[LoweredApplicationName] AS [LoweredApplicationName], 
+[vw_aspnet_Applications].[ApplicationId] AS [ApplicationId], 
+[vw_aspnet_Applications].[Description] AS [Description]
+FROM [dbo].[vw_aspnet_Applications] AS [vw_aspnet_Applications]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_aspnet_MembershipUsers" EntityType="Self.vw_aspnet_MembershipUsers" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[vw_aspnet_MembershipUsers].[UserId] AS [UserId], 
+[vw_aspnet_MembershipUsers].[PasswordFormat] AS [PasswordFormat], 
+[vw_aspnet_MembershipUsers].[MobilePIN] AS [MobilePIN], 
+[vw_aspnet_MembershipUsers].[Email] AS [Email], 
+[vw_aspnet_MembershipUsers].[LoweredEmail] AS [LoweredEmail], 
+[vw_aspnet_MembershipUsers].[PasswordQuestion] AS [PasswordQuestion], 
+[vw_aspnet_MembershipUsers].[PasswordAnswer] AS [PasswordAnswer], 
+[vw_aspnet_MembershipUsers].[IsApproved] AS [IsApproved], 
+[vw_aspnet_MembershipUsers].[IsLockedOut] AS [IsLockedOut], 
+[vw_aspnet_MembershipUsers].[CreateDate] AS [CreateDate], 
+[vw_aspnet_MembershipUsers].[LastLoginDate] AS [LastLoginDate], 
+[vw_aspnet_MembershipUsers].[LastPasswordChangedDate] AS [LastPasswordChangedDate], 
+[vw_aspnet_MembershipUsers].[LastLockoutDate] AS [LastLockoutDate], 
+[vw_aspnet_MembershipUsers].[FailedPasswordAttemptCount] AS [FailedPasswordAttemptCount], 
+[vw_aspnet_MembershipUsers].[FailedPasswordAttemptWindowStart] AS [FailedPasswordAttemptWindowStart], 
+[vw_aspnet_MembershipUsers].[FailedPasswordAnswerAttemptCount] AS [FailedPasswordAnswerAttemptCount], 
+[vw_aspnet_MembershipUsers].[FailedPasswordAnswerAttemptWindowStart] AS [FailedPasswordAnswerAttemptWindowStart], 
+[vw_aspnet_MembershipUsers].[Comment] AS [Comment], 
+[vw_aspnet_MembershipUsers].[ApplicationId] AS [ApplicationId], 
+[vw_aspnet_MembershipUsers].[UserName] AS [UserName], 
+[vw_aspnet_MembershipUsers].[MobileAlias] AS [MobileAlias], 
+[vw_aspnet_MembershipUsers].[IsAnonymous] AS [IsAnonymous], 
+[vw_aspnet_MembershipUsers].[LastActivityDate] AS [LastActivityDate]
+FROM [dbo].[vw_aspnet_MembershipUsers] AS [vw_aspnet_MembershipUsers]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_aspnet_Profiles" EntityType="Self.vw_aspnet_Profiles" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[vw_aspnet_Profiles].[UserId] AS [UserId], 
+[vw_aspnet_Profiles].[LastUpdatedDate] AS [LastUpdatedDate], 
+[vw_aspnet_Profiles].[DataSize] AS [DataSize]
+FROM [dbo].[vw_aspnet_Profiles] AS [vw_aspnet_Profiles]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_aspnet_Roles" EntityType="Self.vw_aspnet_Roles" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[vw_aspnet_Roles].[ApplicationId] AS [ApplicationId], 
+[vw_aspnet_Roles].[RoleId] AS [RoleId], 
+[vw_aspnet_Roles].[RoleName] AS [RoleName], 
+[vw_aspnet_Roles].[LoweredRoleName] AS [LoweredRoleName], 
+[vw_aspnet_Roles].[Description] AS [Description]
+FROM [dbo].[vw_aspnet_Roles] AS [vw_aspnet_Roles]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_aspnet_Users" EntityType="Self.vw_aspnet_Users" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[vw_aspnet_Users].[ApplicationId] AS [ApplicationId], 
+[vw_aspnet_Users].[UserId] AS [UserId], 
+[vw_aspnet_Users].[UserName] AS [UserName], 
+[vw_aspnet_Users].[LoweredUserName] AS [LoweredUserName], 
+[vw_aspnet_Users].[MobileAlias] AS [MobileAlias], 
+[vw_aspnet_Users].[IsAnonymous] AS [IsAnonymous], 
+[vw_aspnet_Users].[LastActivityDate] AS [LastActivityDate]
+FROM [dbo].[vw_aspnet_Users] AS [vw_aspnet_Users]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_aspnet_UsersInRoles" EntityType="Self.vw_aspnet_UsersInRoles" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[vw_aspnet_UsersInRoles].[UserId] AS [UserId], 
+[vw_aspnet_UsersInRoles].[RoleId] AS [RoleId]
+FROM [dbo].[vw_aspnet_UsersInRoles] AS [vw_aspnet_UsersInRoles]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_aspnet_WebPartState_Paths" EntityType="Self.vw_aspnet_WebPartState_Paths" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[vw_aspnet_WebPartState_Paths].[ApplicationId] AS [ApplicationId], 
+[vw_aspnet_WebPartState_Paths].[PathId] AS [PathId], 
+[vw_aspnet_WebPartState_Paths].[Path] AS [Path], 
+[vw_aspnet_WebPartState_Paths].[LoweredPath] AS [LoweredPath]
+FROM [dbo].[vw_aspnet_WebPartState_Paths] AS [vw_aspnet_WebPartState_Paths]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_aspnet_WebPartState_Shared" EntityType="Self.vw_aspnet_WebPartState_Shared" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[vw_aspnet_WebPartState_Shared].[PathId] AS [PathId], 
+[vw_aspnet_WebPartState_Shared].[DataSize] AS [DataSize], 
+[vw_aspnet_WebPartState_Shared].[LastUpdatedDate] AS [LastUpdatedDate]
+FROM [dbo].[vw_aspnet_WebPartState_Shared] AS [vw_aspnet_WebPartState_Shared]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_aspnet_WebPartState_User" EntityType="Self.vw_aspnet_WebPartState_User" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[vw_aspnet_WebPartState_User].[PathId] AS [PathId], 
+[vw_aspnet_WebPartState_User].[UserId] AS [UserId], 
+[vw_aspnet_WebPartState_User].[DataSize] AS [DataSize], 
+[vw_aspnet_WebPartState_User].[LastUpdatedDate] AS [LastUpdatedDate]
+FROM [dbo].[vw_aspnet_WebPartState_User] AS [vw_aspnet_WebPartState_User]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK__aspnet_Me__Appli__6319B466" Association="Self.FK__aspnet_Me__Appli__6319B466">
             <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
             <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
@@ -930,7 +1204,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_DisciplineTest" Association="Self.FK_DisciplineTest">
             <End Role="Discipline" EntitySet="Discipline" />
-            <End Role="TestSet" EntitySet="TestSet" />
+            <End Role="Test" EntitySet="Test" />
           </AssociationSet>
           <AssociationSet Name="FK_GroupStudentRequest" Association="Self.FK_GroupStudentRequest">
             <End Role="Group" EntitySet="Group" />
@@ -941,7 +1215,7 @@
             <End Role="GroupTest" EntitySet="GroupTest" />
           </AssociationSet>
           <AssociationSet Name="FK_GroupTest_Test" Association="Self.FK_GroupTest_Test">
-            <End Role="TestSet" EntitySet="TestSet" />
+            <End Role="Test" EntitySet="Test" />
             <End Role="GroupTest" EntitySet="GroupTest" />
           </AssociationSet>
           <AssociationSet Name="FK_GroupUser_aspnet_Users" Association="Self.FK_GroupUser_aspnet_Users">
@@ -964,17 +1238,24 @@
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="Request" EntitySet="Request" />
           </AssociationSet>
+          <AssociationSet Name="FK_Result_aspnet_Users" Association="Self.FK_Result_aspnet_Users">
+            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+            <End Role="Result" EntitySet="Result" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Result_Test" Association="Self.FK_Result_Test">
+            <End Role="Test" EntitySet="Test" />
+            <End Role="Result" EntitySet="Result" />
+          </AssociationSet>
           <AssociationSet Name="FK_StudentRequestSet_aspnet_Users" Association="Self.FK_StudentRequestSet_aspnet_Users">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="StudentRequest" EntitySet="StudentRequest" />
           </AssociationSet>
           <AssociationSet Name="FK_TestQuastion" Association="Self.FK_TestQuastion">
-            <End Role="TestSet" EntitySet="TestSet" />
+            <End Role="Test" EntitySet="Test" />
             <End Role="Quastion" EntitySet="Quastion" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="student22Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -995,6 +1276,7 @@
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
+          <Property Name="ApplicationId" Type="Guid" Nullable="false" />
           <Property Name="UserId" Type="Guid" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="PasswordFormat" Type="Int32" Nullable="false" />
@@ -1022,6 +1304,7 @@
           <Key>
             <PropertyRef Name="PathId" />
           </Key>
+          <Property Name="ApplicationId" Type="Guid" Nullable="false" />
           <Property Name="PathId" Type="Guid" Nullable="false" />
           <Property Name="Path" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LoweredPath" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
@@ -1043,6 +1326,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="PathId" Type="Guid" />
+          <Property Name="UserId" Type="Guid" />
           <Property Name="PageSettings" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="aspnet_Paths" Relationship="Self.FK__aspnet_Pe__PathI__1A69E950" FromRole="aspnet_PersonalizationPerUser" ToRole="aspnet_Paths" />
@@ -1063,6 +1348,7 @@
           <Key>
             <PropertyRef Name="RoleId" />
           </Key>
+          <Property Name="ApplicationId" Type="Guid" Nullable="false" />
           <Property Name="RoleId" Type="Guid" Nullable="false" />
           <Property Name="RoleName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LoweredRoleName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
@@ -1084,6 +1370,7 @@
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
+          <Property Name="ApplicationId" Type="Guid" Nullable="false" />
           <Property Name="UserId" Type="Guid" Nullable="false" />
           <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LoweredUserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
@@ -1099,6 +1386,7 @@
           <NavigationProperty Name="StudentRequests" Relationship="Self.FK_StudentRequestSet_aspnet_Users" FromRole="aspnet_Users" ToRole="StudentRequest" />
           <NavigationProperty Name="aspnet_Roles" Relationship="Self.aspnet_UsersInRoles" FromRole="aspnet_Users" ToRole="aspnet_Roles" />
           <NavigationProperty Name="Groups" Relationship="Self.GroupUser" FromRole="aspnet_Users" ToRole="Group" />
+          <NavigationProperty Name="Results" Relationship="student22Model.FK_Result_aspnet_Users" FromRole="aspnet_Users" ToRole="Result" />
         </EntityType>
         <EntityType Name="aspnet_WebEvent_Events">
           <Key>
@@ -1126,8 +1414,9 @@
           </Key>
           <Property Name="DisciplineId" Type="Guid" Nullable="false" />
           <Property Name="DisciplineName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="aspnet_Users_UserId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="aspnet_Users" Relationship="Self.FK_DisciplineSet_aspnet_Users" FromRole="Discipline" ToRole="aspnet_Users" />
-          <NavigationProperty Name="TestSets" Relationship="Self.FK_DisciplineTest" FromRole="Discipline" ToRole="TestSet" />
+          <NavigationProperty Name="Tests" Relationship="Self.FK_DisciplineTest" FromRole="Discipline" ToRole="Test" />
         </EntityType>
         <EntityType Name="Group">
           <Key>
@@ -1136,7 +1425,7 @@
           <Property Name="GroupId" Type="Guid" Nullable="false" />
           <Property Name="GroupName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="StudentRequests" Relationship="Self.FK_GroupStudentRequest" FromRole="Group" ToRole="StudentRequest" />
-          <NavigationProperty Name="TestSets" Relationship="Self.GroupTest" FromRole="Group" ToRole="TestSet" />
+          <NavigationProperty Name="Tests" Relationship="Self.GroupTest" FromRole="Group" ToRole="Test" />
           <NavigationProperty Name="aspnet_Users" Relationship="Self.GroupUser" FromRole="Group" ToRole="aspnet_Users" />
         </EntityType>
         <EntityType Name="Quastion">
@@ -1145,8 +1434,9 @@
           </Key>
           <Property Name="QuastionId" Type="Guid" Nullable="false" />
           <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Test_TestId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Variants" Relationship="Self.FK_QuastionVariant" FromRole="Quastion" ToRole="Variant" />
-          <NavigationProperty Name="TestSet" Relationship="Self.FK_TestQuastion" FromRole="Quastion" ToRole="TestSet" />
+          <NavigationProperty Name="Test" Relationship="Self.FK_TestQuastion" FromRole="Quastion" ToRole="Test" />
         </EntityType>
         <EntityType Name="Request">
           <Key>
@@ -1154,6 +1444,8 @@
           </Key>
           <Property Name="RequestId" Type="Guid" Nullable="false" />
           <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="aspnet_Roles_RoleId" Type="Guid" Nullable="false" />
+          <Property Name="aspnet_Users_UserId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="aspnet_Roles" Relationship="Self.FK_RequestSet_aspnet_Roles" FromRole="Request" ToRole="aspnet_Roles" />
           <NavigationProperty Name="aspnet_Users" Relationship="Self.FK_RequestSet_aspnet_Users" FromRole="Request" ToRole="aspnet_Users" />
         </EntityType>
@@ -1163,6 +1455,8 @@
           </Key>
           <Property Name="StudentRequestId" Type="Guid" Nullable="false" />
           <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Group_GroupId" Type="Guid" Nullable="false" />
+          <Property Name="aspnet_Users_UserId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="aspnet_Users" Relationship="Self.FK_StudentRequestSet_aspnet_Users" FromRole="StudentRequest" ToRole="aspnet_Users" />
           <NavigationProperty Name="Group" Relationship="Self.FK_GroupStudentRequest" FromRole="StudentRequest" ToRole="Group" />
         </EntityType>
@@ -1176,15 +1470,17 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <EntityType Name="TestSet">
+        <EntityType Name="Test">
           <Key>
             <PropertyRef Name="TestId" />
           </Key>
           <Property Name="TestId" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Discipline" Relationship="Self.FK_DisciplineTest" FromRole="TestSet" ToRole="Discipline" />
-          <NavigationProperty Name="Quastions" Relationship="Self.FK_TestQuastion" FromRole="TestSet" ToRole="Quastion" />
-          <NavigationProperty Name="Groups" Relationship="Self.GroupTest" FromRole="TestSet" ToRole="Group" />
+          <Property Name="Discipline_DisciplineId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Discipline" Relationship="Self.FK_DisciplineTest" FromRole="Test" ToRole="Discipline" />
+          <NavigationProperty Name="Quastions" Relationship="Self.FK_TestQuastion" FromRole="Test" ToRole="Quastion" />
+          <NavigationProperty Name="Groups" Relationship="Self.GroupTest" FromRole="Test" ToRole="Group" />
+          <NavigationProperty Name="Results" Relationship="student22Model.FK_Result_Test" FromRole="Test" ToRole="Result" />
         </EntityType>
         <EntityType Name="Variant">
           <Key>
@@ -1193,23 +1489,187 @@
           <Property Name="VariantId" Type="Guid" Nullable="false" />
           <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IsValid" Type="Boolean" Nullable="false" />
+          <Property Name="Quastion_QuastionId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Quastion" Relationship="Self.FK_QuastionVariant" FromRole="Variant" ToRole="Quastion" />
+        </EntityType>
+        <EntityType Name="vw_aspnet_Applications">
+          <Key>
+            <PropertyRef Name="ApplicationName" />
+            <PropertyRef Name="LoweredApplicationName" />
+            <PropertyRef Name="ApplicationId" />
+          </Key>
+          <Property Name="ApplicationName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LoweredApplicationName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vw_aspnet_MembershipUsers">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="PasswordFormat" />
+            <PropertyRef Name="IsApproved" />
+            <PropertyRef Name="IsLockedOut" />
+            <PropertyRef Name="CreateDate" />
+            <PropertyRef Name="LastLoginDate" />
+            <PropertyRef Name="LastPasswordChangedDate" />
+            <PropertyRef Name="LastLockoutDate" />
+            <PropertyRef Name="FailedPasswordAttemptCount" />
+            <PropertyRef Name="FailedPasswordAttemptWindowStart" />
+            <PropertyRef Name="FailedPasswordAnswerAttemptCount" />
+            <PropertyRef Name="FailedPasswordAnswerAttemptWindowStart" />
+            <PropertyRef Name="ApplicationId" />
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="IsAnonymous" />
+            <PropertyRef Name="LastActivityDate" />
+          </Key>
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="PasswordFormat" Type="Int32" Nullable="false" />
+          <Property Name="MobilePIN" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="LoweredEmail" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordQuestion" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordAnswer" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="IsApproved" Type="Boolean" Nullable="false" />
+          <Property Name="IsLockedOut" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastLoginDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastPasswordChangedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastLockoutDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FailedPasswordAttemptCount" Type="Int32" Nullable="false" />
+          <Property Name="FailedPasswordAttemptWindowStart" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FailedPasswordAnswerAttemptCount" Type="Int32" Nullable="false" />
+          <Property Name="FailedPasswordAnswerAttemptWindowStart" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MobileAlias" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="IsAnonymous" Type="Boolean" Nullable="false" />
+          <Property Name="LastActivityDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="vw_aspnet_Profiles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="LastUpdatedDate" />
+          </Key>
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DataSize" Type="Int32" />
+        </EntityType>
+        <EntityType Name="vw_aspnet_Roles">
+          <Key>
+            <PropertyRef Name="ApplicationId" />
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="RoleName" />
+            <PropertyRef Name="LoweredRoleName" />
+          </Key>
+          <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+          <Property Name="RoleId" Type="Guid" Nullable="false" />
+          <Property Name="RoleName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LoweredRoleName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vw_aspnet_Users">
+          <Key>
+            <PropertyRef Name="ApplicationId" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="LoweredUserName" />
+            <PropertyRef Name="IsAnonymous" />
+            <PropertyRef Name="LastActivityDate" />
+          </Key>
+          <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LoweredUserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MobileAlias" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="IsAnonymous" Type="Boolean" Nullable="false" />
+          <Property Name="LastActivityDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="vw_aspnet_UsersInRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="RoleId" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vw_aspnet_WebPartState_Paths">
+          <Key>
+            <PropertyRef Name="ApplicationId" />
+            <PropertyRef Name="PathId" />
+            <PropertyRef Name="Path" />
+            <PropertyRef Name="LoweredPath" />
+          </Key>
+          <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+          <Property Name="PathId" Type="Guid" Nullable="false" />
+          <Property Name="Path" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LoweredPath" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vw_aspnet_WebPartState_Shared">
+          <Key>
+            <PropertyRef Name="PathId" />
+            <PropertyRef Name="LastUpdatedDate" />
+          </Key>
+          <Property Name="PathId" Type="Guid" Nullable="false" />
+          <Property Name="DataSize" Type="Int32" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="vw_aspnet_WebPartState_User">
+          <Key>
+            <PropertyRef Name="LastUpdatedDate" />
+          </Key>
+          <Property Name="PathId" Type="Guid" />
+          <Property Name="UserId" Type="Guid" />
+          <Property Name="DataSize" Type="Int32" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="FK__aspnet_Me__Appli__6319B466">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
           <End Role="aspnet_Membership" Type="Self.aspnet_Membership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Applications">
+              <PropertyRef Name="ApplicationId" />
+            </Principal>
+            <Dependent Role="aspnet_Membership">
+              <PropertyRef Name="ApplicationId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK__aspnet_Pa__Appli__10E07F16">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
           <End Role="aspnet_Paths" Type="Self.aspnet_Paths" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Applications">
+              <PropertyRef Name="ApplicationId" />
+            </Principal>
+            <Dependent Role="aspnet_Paths">
+              <PropertyRef Name="ApplicationId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK__aspnet_Ro__Appli__7FB5F314">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
           <End Role="aspnet_Roles" Type="Self.aspnet_Roles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Applications">
+              <PropertyRef Name="ApplicationId" />
+            </Principal>
+            <Dependent Role="aspnet_Roles">
+              <PropertyRef Name="ApplicationId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK__aspnet_Us__Appli__54CB950F">
           <End Role="aspnet_Applications" Type="Self.aspnet_Applications" Multiplicity="1" />
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Applications">
+              <PropertyRef Name="ApplicationId" />
+            </Principal>
+            <Dependent Role="aspnet_Users">
+              <PropertyRef Name="ApplicationId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK__aspnet_Me__UserI__640DD89F">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
@@ -1238,10 +1698,26 @@
         <Association Name="FK__aspnet_Pe__PathI__1A69E950">
           <End Role="aspnet_Paths" Type="Self.aspnet_Paths" Multiplicity="0..1" />
           <End Role="aspnet_PersonalizationPerUser" Type="Self.aspnet_PersonalizationPerUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Paths">
+              <PropertyRef Name="PathId" />
+            </Principal>
+            <Dependent Role="aspnet_PersonalizationPerUser">
+              <PropertyRef Name="PathId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK__aspnet_Pe__UserI__1B5E0D89">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="0..1" />
           <End Role="aspnet_PersonalizationPerUser" Type="Self.aspnet_PersonalizationPerUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="aspnet_PersonalizationPerUser">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK__aspnet_Pr__UserI__7720AD13">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
@@ -1258,34 +1734,98 @@
         <Association Name="FK_RequestSet_aspnet_Roles">
           <End Role="aspnet_Roles" Type="Self.aspnet_Roles" Multiplicity="1" />
           <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="aspnet_Roles_RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK_DisciplineSet_aspnet_Users">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
           <End Role="Discipline" Type="Self.Discipline" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Discipline">
+              <PropertyRef Name="aspnet_Users_UserId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK_RequestSet_aspnet_Users">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
           <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="aspnet_Users_UserId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK_StudentRequestSet_aspnet_Users">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="1" />
           <End Role="StudentRequest" Type="Self.StudentRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="StudentRequest">
+              <PropertyRef Name="aspnet_Users_UserId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK_DisciplineTest">
           <End Role="Discipline" Type="Self.Discipline" Multiplicity="1" />
-          <End Role="TestSet" Type="Self.TestSet" Multiplicity="*" />
+          <End Role="Test" Type="Self.Test" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Discipline">
+              <PropertyRef Name="DisciplineId" />
+            </Principal>
+            <Dependent Role="Test">
+              <PropertyRef Name="Discipline_DisciplineId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK_GroupStudentRequest">
           <End Role="Group" Type="Self.Group" Multiplicity="1" />
           <End Role="StudentRequest" Type="Self.StudentRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="StudentRequest">
+              <PropertyRef Name="Group_GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK_QuastionVariant">
           <End Role="Quastion" Type="Self.Quastion" Multiplicity="1" />
           <End Role="Variant" Type="Self.Variant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quastion">
+              <PropertyRef Name="QuastionId" />
+            </Principal>
+            <Dependent Role="Variant">
+              <PropertyRef Name="Quastion_QuastionId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK_TestQuastion">
-          <End Role="TestSet" Type="Self.TestSet" Multiplicity="1" />
+          <End Role="Test" Type="Self.Test" Multiplicity="1" />
           <End Role="Quastion" Type="Self.Quastion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="TestId" />
+            </Principal>
+            <Dependent Role="Quastion">
+              <PropertyRef Name="Test_TestId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="aspnet_UsersInRoles">
           <End Role="aspnet_Roles" Type="Self.aspnet_Roles" Multiplicity="*" />
@@ -1293,13 +1833,13 @@
         </Association>
         <Association Name="GroupTest">
           <End Role="Group" Type="Self.Group" Multiplicity="*" />
-          <End Role="TestSet" Type="Self.TestSet" Multiplicity="*" />
+          <End Role="Test" Type="Self.Test" Multiplicity="*" />
         </Association>
         <Association Name="GroupUser">
           <End Role="aspnet_Users" Type="Self.aspnet_Users" Multiplicity="*" />
           <End Role="Group" Type="Self.Group" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="ModelContainer1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="aspnet_Applications" EntityType="Self.aspnet_Applications" />
           <EntitySet Name="aspnet_Membership" EntityType="Self.aspnet_Membership" />
           <EntitySet Name="aspnet_Paths" EntityType="Self.aspnet_Paths" />
@@ -1316,8 +1856,17 @@
           <EntitySet Name="Requests" EntityType="Self.Request" />
           <EntitySet Name="StudentRequests" EntityType="Self.StudentRequest" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <EntitySet Name="TestSets" EntityType="Self.TestSet" />
+          <EntitySet Name="Tests" EntityType="Self.Test" />
           <EntitySet Name="Variants" EntityType="Self.Variant" />
+          <EntitySet Name="vw_aspnet_Applications" EntityType="Self.vw_aspnet_Applications" />
+          <EntitySet Name="vw_aspnet_MembershipUsers" EntityType="Self.vw_aspnet_MembershipUsers" />
+          <EntitySet Name="vw_aspnet_Profiles" EntityType="Self.vw_aspnet_Profiles" />
+          <EntitySet Name="vw_aspnet_Roles" EntityType="Self.vw_aspnet_Roles" />
+          <EntitySet Name="vw_aspnet_Users" EntityType="Self.vw_aspnet_Users" />
+          <EntitySet Name="vw_aspnet_UsersInRoles" EntityType="Self.vw_aspnet_UsersInRoles" />
+          <EntitySet Name="vw_aspnet_WebPartState_Paths" EntityType="Self.vw_aspnet_WebPartState_Paths" />
+          <EntitySet Name="vw_aspnet_WebPartState_Shared" EntityType="Self.vw_aspnet_WebPartState_Shared" />
+          <EntitySet Name="vw_aspnet_WebPartState_User" EntityType="Self.vw_aspnet_WebPartState_User" />
           <AssociationSet Name="FK__aspnet_Me__Appli__6319B466" Association="Self.FK__aspnet_Me__Appli__6319B466">
             <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
             <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
@@ -1372,7 +1921,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_DisciplineTest" Association="Self.FK_DisciplineTest">
             <End Role="Discipline" EntitySet="Disciplines" />
-            <End Role="TestSet" EntitySet="TestSets" />
+            <End Role="Test" EntitySet="Tests" />
           </AssociationSet>
           <AssociationSet Name="FK_GroupStudentRequest" Association="Self.FK_GroupStudentRequest">
             <End Role="Group" EntitySet="Groups" />
@@ -1383,7 +1932,7 @@
             <End Role="Variant" EntitySet="Variants" />
           </AssociationSet>
           <AssociationSet Name="FK_TestQuastion" Association="Self.FK_TestQuastion">
-            <End Role="TestSet" EntitySet="TestSets" />
+            <End Role="Test" EntitySet="Tests" />
             <End Role="Quastion" EntitySet="Quastions" />
           </AssociationSet>
           <AssociationSet Name="aspnet_UsersInRoles" Association="Self.aspnet_UsersInRoles">
@@ -1392,14 +1941,14 @@
           </AssociationSet>
           <AssociationSet Name="GroupTest" Association="Self.GroupTest">
             <End Role="Group" EntitySet="Groups" />
-            <End Role="TestSet" EntitySet="TestSets" />
+            <End Role="Test" EntitySet="Tests" />
           </AssociationSet>
           <AssociationSet Name="GroupUser" Association="Self.GroupUser">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="Group" EntitySet="Groups" />
           </AssociationSet>
           <FunctionImport Name="aspnet_AnyDataInTables" ReturnType="Collection(String)">
-            <Parameter Name="TablesToCheck" Mode="In" Type="Int32" />
+          <Parameter Name="TablesToCheck" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="aspnet_Applications_CreateApplication">
             <Parameter Name="ApplicationName" Mode="In" Type="String" />
@@ -1654,17 +2203,17 @@
             <Parameter Name="DeleteOnlyIfRoleIsEmpty" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="aspnet_Roles_GetAllRoles" ReturnType="Collection(String)">
-            <Parameter Name="ApplicationName" Mode="In" Type="String" />
+          <Parameter Name="ApplicationName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="aspnet_Roles_RoleExists">
             <Parameter Name="ApplicationName" Mode="In" Type="String" />
             <Parameter Name="RoleName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="aspnet_Setup_RemoveAllRoleMembers">
-            <Parameter Name="name" Mode="In" Type="String" />
+          <Parameter Name="name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="aspnet_Setup_RestorePermissions">
-            <Parameter Name="name" Mode="In" Type="String" />
+          <Parameter Name="name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="aspnet_UnRegisterSchemaVersion">
             <Parameter Name="Feature" Mode="In" Type="String" />
@@ -1759,6 +2308,15 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="Results" EntityType="student22Model.Result" />
+          <AssociationSet Name="FK_Result_aspnet_Users" Association="student22Model.FK_Result_aspnet_Users">
+            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+            <End Role="Result" EntitySet="Results" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Result_Test" Association="student22Model.FK_Result_Test">
+            <End Role="Test" EntitySet="Tests" />
+            <End Role="Result" EntitySet="Results" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="aspnet_Membership_GetPassword_Result">
           <Property Type="String" Name="Column1" Nullable="true" MaxLength="128" />
@@ -1820,12 +2378,47 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="Result">
+          <Key>
+            <PropertyRef Name="TestId" />
+            <PropertyRef Name="aspnet_Users_UserId" />
+          </Key>
+          <Property Name="TestId" Type="Guid" Nullable="false" />
+          <Property Name="aspnet_Users_UserId" Type="Guid" Nullable="false" />
+          <Property Name="Result1" Type="Int32" />
+          <NavigationProperty Name="aspnet_Users" Relationship="student22Model.FK_Result_aspnet_Users" FromRole="Result" ToRole="aspnet_Users" />
+          <NavigationProperty Name="Test" Relationship="student22Model.FK_Result_Test" FromRole="Result" ToRole="Test" />
+        </EntityType>
+        <Association Name="FK_Result_aspnet_Users">
+          <End Type="student22Model.aspnet_Users" Role="aspnet_Users" Multiplicity="1" />
+          <End Type="student22Model.Result" Role="Result" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Result">
+              <PropertyRef Name="aspnet_Users_UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Result_Test">
+          <End Type="student22Model.Test" Role="Test" Multiplicity="1" />
+          <End Type="student22Model.Result" Role="Result" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="TestId" />
+            </Principal>
+            <Dependent Role="Result">
+              <PropertyRef Name="TestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="student22ModelStoreContainer" CdmEntityContainer="ModelContainer1">
+        <EntityContainerMapping StorageEntityContainer="student22ModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="aspnet_Applications">
             <EntityTypeMapping TypeName="student22Model.aspnet_Applications">
               <MappingFragment StoreEntitySet="aspnet_Applications">
@@ -1839,6 +2432,7 @@
           <EntitySetMapping Name="aspnet_Membership">
             <EntityTypeMapping TypeName="student22Model.aspnet_Membership">
               <MappingFragment StoreEntitySet="aspnet_Membership">
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="PasswordFormat" ColumnName="PasswordFormat" />
@@ -1865,6 +2459,7 @@
           <EntitySetMapping Name="aspnet_Paths">
             <EntityTypeMapping TypeName="student22Model.aspnet_Paths">
               <MappingFragment StoreEntitySet="aspnet_Paths">
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
                 <ScalarProperty Name="PathId" ColumnName="PathId" />
                 <ScalarProperty Name="Path" ColumnName="Path" />
                 <ScalarProperty Name="LoweredPath" ColumnName="LoweredPath" />
@@ -1884,6 +2479,8 @@
             <EntityTypeMapping TypeName="student22Model.aspnet_PersonalizationPerUser">
               <MappingFragment StoreEntitySet="aspnet_PersonalizationPerUser">
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PathId" ColumnName="PathId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="PageSettings" ColumnName="PageSettings" />
                 <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
               </MappingFragment>
@@ -1903,6 +2500,7 @@
           <EntitySetMapping Name="aspnet_Roles">
             <EntityTypeMapping TypeName="student22Model.aspnet_Roles">
               <MappingFragment StoreEntitySet="aspnet_Roles">
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="LoweredRoleName" ColumnName="LoweredRoleName" />
@@ -1922,6 +2520,7 @@
           <EntitySetMapping Name="aspnet_Users">
             <EntityTypeMapping TypeName="student22Model.aspnet_Users">
               <MappingFragment StoreEntitySet="aspnet_Users">
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="LoweredUserName" ColumnName="LoweredUserName" />
@@ -1957,6 +2556,7 @@
               <MappingFragment StoreEntitySet="Discipline">
                 <ScalarProperty Name="DisciplineId" ColumnName="DisciplineId" />
                 <ScalarProperty Name="DisciplineName" ColumnName="DisciplineName" />
+                <ScalarProperty Name="aspnet_Users_UserId" ColumnName="aspnet_Users_UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1973,6 +2573,7 @@
               <MappingFragment StoreEntitySet="Quastion">
                 <ScalarProperty Name="QuastionId" ColumnName="QuastionId" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Test_TestId" ColumnName="Test_TestId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1981,6 +2582,8 @@
               <MappingFragment StoreEntitySet="Request">
                 <ScalarProperty Name="RequestId" ColumnName="RequestId" />
                 <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="aspnet_Roles_RoleId" ColumnName="aspnet_Roles_RoleId" />
+                <ScalarProperty Name="aspnet_Users_UserId" ColumnName="aspnet_Users_UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1989,6 +2592,8 @@
               <MappingFragment StoreEntitySet="StudentRequest">
                 <ScalarProperty Name="StudentRequestId" ColumnName="StudentRequestId" />
                 <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Group_GroupId" ColumnName="Group_GroupId" />
+                <ScalarProperty Name="aspnet_Users_UserId" ColumnName="aspnet_Users_UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2003,11 +2608,12 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TestSets">
-            <EntityTypeMapping TypeName="student22Model.TestSet">
-              <MappingFragment StoreEntitySet="TestSet">
+          <EntitySetMapping Name="Tests">
+            <EntityTypeMapping TypeName="student22Model.Test">
+              <MappingFragment StoreEntitySet="Test">
                 <ScalarProperty Name="TestId" ColumnName="TestId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Discipline_DisciplineId" ColumnName="Discipline_DisciplineId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2017,123 +2623,119 @@
                 <ScalarProperty Name="VariantId" ColumnName="VariantId" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
                 <ScalarProperty Name="IsValid" ColumnName="IsValid" />
+                <ScalarProperty Name="Quastion_QuastionId" ColumnName="Quastion_QuastionId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="FK__aspnet_Me__Appli__6319B466" TypeName="student22Model.FK__aspnet_Me__Appli__6319B466" StoreEntitySet="aspnet_Membership">
-            <EndProperty Name="aspnet_Applications">
-              <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
-            </EndProperty>
-            <EndProperty Name="aspnet_Membership">
-              <ScalarProperty Name="UserId" ColumnName="UserId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK__aspnet_Pa__Appli__10E07F16" TypeName="student22Model.FK__aspnet_Pa__Appli__10E07F16" StoreEntitySet="aspnet_Paths">
-            <EndProperty Name="aspnet_Applications">
-              <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
-            </EndProperty>
-            <EndProperty Name="aspnet_Paths">
-              <ScalarProperty Name="PathId" ColumnName="PathId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK__aspnet_Ro__Appli__7FB5F314" TypeName="student22Model.FK__aspnet_Ro__Appli__7FB5F314" StoreEntitySet="aspnet_Roles">
-            <EndProperty Name="aspnet_Applications">
-              <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
-            </EndProperty>
-            <EndProperty Name="aspnet_Roles">
-              <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK__aspnet_Us__Appli__54CB950F" TypeName="student22Model.FK__aspnet_Us__Appli__54CB950F" StoreEntitySet="aspnet_Users">
-            <EndProperty Name="aspnet_Applications">
-              <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
-            </EndProperty>
-            <EndProperty Name="aspnet_Users">
-              <ScalarProperty Name="UserId" ColumnName="UserId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK__aspnet_Pe__PathI__1A69E950" TypeName="student22Model.FK__aspnet_Pe__PathI__1A69E950" StoreEntitySet="aspnet_PersonalizationPerUser">
-            <EndProperty Name="aspnet_Paths">
-              <ScalarProperty Name="PathId" ColumnName="PathId" />
-            </EndProperty>
-            <EndProperty Name="aspnet_PersonalizationPerUser">
-              <ScalarProperty Name="Id" ColumnName="Id" />
-            </EndProperty>
-            <Condition IsNull="false" ColumnName="PathId" />
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK__aspnet_Pe__UserI__1B5E0D89" TypeName="student22Model.FK__aspnet_Pe__UserI__1B5E0D89" StoreEntitySet="aspnet_PersonalizationPerUser">
-            <EndProperty Name="aspnet_Users">
-              <ScalarProperty Name="UserId" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="aspnet_PersonalizationPerUser">
-              <ScalarProperty Name="Id" ColumnName="Id" />
-            </EndProperty>
-            <Condition IsNull="false" ColumnName="UserId" />
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK_RequestSet_aspnet_Roles" TypeName="student22Model.FK_RequestSet_aspnet_Roles" StoreEntitySet="Request">
-            <EndProperty Name="aspnet_Roles">
-              <ScalarProperty Name="RoleId" ColumnName="aspnet_Roles_RoleId" />
-            </EndProperty>
-            <EndProperty Name="Request">
-              <ScalarProperty Name="RequestId" ColumnName="RequestId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK_DisciplineSet_aspnet_Users" TypeName="student22Model.FK_DisciplineSet_aspnet_Users" StoreEntitySet="Discipline">
-            <EndProperty Name="aspnet_Users">
-              <ScalarProperty Name="UserId" ColumnName="aspnet_Users_UserId" />
-            </EndProperty>
-            <EndProperty Name="Discipline">
-              <ScalarProperty Name="DisciplineId" ColumnName="DisciplineId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK_RequestSet_aspnet_Users" TypeName="student22Model.FK_RequestSet_aspnet_Users" StoreEntitySet="Request">
-            <EndProperty Name="aspnet_Users">
-              <ScalarProperty Name="UserId" ColumnName="aspnet_Users_UserId" />
-            </EndProperty>
-            <EndProperty Name="Request">
-              <ScalarProperty Name="RequestId" ColumnName="RequestId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK_StudentRequestSet_aspnet_Users" TypeName="student22Model.FK_StudentRequestSet_aspnet_Users" StoreEntitySet="StudentRequest">
-            <EndProperty Name="aspnet_Users">
-              <ScalarProperty Name="UserId" ColumnName="aspnet_Users_UserId" />
-            </EndProperty>
-            <EndProperty Name="StudentRequest">
-              <ScalarProperty Name="StudentRequestId" ColumnName="StudentRequestId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK_DisciplineTest" TypeName="student22Model.FK_DisciplineTest" StoreEntitySet="TestSet">
-            <EndProperty Name="Discipline">
-              <ScalarProperty Name="DisciplineId" ColumnName="Discipline_DisciplineId" />
-            </EndProperty>
-            <EndProperty Name="TestSet">
-              <ScalarProperty Name="TestId" ColumnName="TestId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK_GroupStudentRequest" TypeName="student22Model.FK_GroupStudentRequest" StoreEntitySet="StudentRequest">
-            <EndProperty Name="Group">
-              <ScalarProperty Name="GroupId" ColumnName="Group_GroupId" />
-            </EndProperty>
-            <EndProperty Name="StudentRequest">
-              <ScalarProperty Name="StudentRequestId" ColumnName="StudentRequestId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK_QuastionVariant" TypeName="student22Model.FK_QuastionVariant" StoreEntitySet="Variant">
-            <EndProperty Name="Quastion">
-              <ScalarProperty Name="QuastionId" ColumnName="Quastion_QuastionId" />
-            </EndProperty>
-            <EndProperty Name="Variant">
-              <ScalarProperty Name="VariantId" ColumnName="VariantId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK_TestQuastion" TypeName="student22Model.FK_TestQuastion" StoreEntitySet="Quastion">
-            <EndProperty Name="TestSet">
-              <ScalarProperty Name="TestId" ColumnName="Test_TestId" />
-            </EndProperty>
-            <EndProperty Name="Quastion">
-              <ScalarProperty Name="QuastionId" ColumnName="QuastionId" />
-            </EndProperty>
-          </AssociationSetMapping>
+          <EntitySetMapping Name="vw_aspnet_Applications">
+            <EntityTypeMapping TypeName="student22Model.vw_aspnet_Applications">
+              <MappingFragment StoreEntitySet="vw_aspnet_Applications">
+                <ScalarProperty Name="ApplicationName" ColumnName="ApplicationName" />
+                <ScalarProperty Name="LoweredApplicationName" ColumnName="LoweredApplicationName" />
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_aspnet_MembershipUsers">
+            <EntityTypeMapping TypeName="student22Model.vw_aspnet_MembershipUsers">
+              <MappingFragment StoreEntitySet="vw_aspnet_MembershipUsers">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="PasswordFormat" ColumnName="PasswordFormat" />
+                <ScalarProperty Name="MobilePIN" ColumnName="MobilePIN" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LoweredEmail" ColumnName="LoweredEmail" />
+                <ScalarProperty Name="PasswordQuestion" ColumnName="PasswordQuestion" />
+                <ScalarProperty Name="PasswordAnswer" ColumnName="PasswordAnswer" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="IsLockedOut" ColumnName="IsLockedOut" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+                <ScalarProperty Name="LastPasswordChangedDate" ColumnName="LastPasswordChangedDate" />
+                <ScalarProperty Name="LastLockoutDate" ColumnName="LastLockoutDate" />
+                <ScalarProperty Name="FailedPasswordAttemptCount" ColumnName="FailedPasswordAttemptCount" />
+                <ScalarProperty Name="FailedPasswordAttemptWindowStart" ColumnName="FailedPasswordAttemptWindowStart" />
+                <ScalarProperty Name="FailedPasswordAnswerAttemptCount" ColumnName="FailedPasswordAnswerAttemptCount" />
+                <ScalarProperty Name="FailedPasswordAnswerAttemptWindowStart" ColumnName="FailedPasswordAnswerAttemptWindowStart" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="MobileAlias" ColumnName="MobileAlias" />
+                <ScalarProperty Name="IsAnonymous" ColumnName="IsAnonymous" />
+                <ScalarProperty Name="LastActivityDate" ColumnName="LastActivityDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_aspnet_Profiles">
+            <EntityTypeMapping TypeName="student22Model.vw_aspnet_Profiles">
+              <MappingFragment StoreEntitySet="vw_aspnet_Profiles">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="DataSize" ColumnName="DataSize" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_aspnet_Roles">
+            <EntityTypeMapping TypeName="student22Model.vw_aspnet_Roles">
+              <MappingFragment StoreEntitySet="vw_aspnet_Roles">
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="LoweredRoleName" ColumnName="LoweredRoleName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_aspnet_Users">
+            <EntityTypeMapping TypeName="student22Model.vw_aspnet_Users">
+              <MappingFragment StoreEntitySet="vw_aspnet_Users">
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="LoweredUserName" ColumnName="LoweredUserName" />
+                <ScalarProperty Name="MobileAlias" ColumnName="MobileAlias" />
+                <ScalarProperty Name="IsAnonymous" ColumnName="IsAnonymous" />
+                <ScalarProperty Name="LastActivityDate" ColumnName="LastActivityDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_aspnet_UsersInRoles">
+            <EntityTypeMapping TypeName="student22Model.vw_aspnet_UsersInRoles">
+              <MappingFragment StoreEntitySet="vw_aspnet_UsersInRoles">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_aspnet_WebPartState_Paths">
+            <EntityTypeMapping TypeName="student22Model.vw_aspnet_WebPartState_Paths">
+              <MappingFragment StoreEntitySet="vw_aspnet_WebPartState_Paths">
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="PathId" ColumnName="PathId" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="LoweredPath" ColumnName="LoweredPath" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_aspnet_WebPartState_Shared">
+            <EntityTypeMapping TypeName="student22Model.vw_aspnet_WebPartState_Shared">
+              <MappingFragment StoreEntitySet="vw_aspnet_WebPartState_Shared">
+                <ScalarProperty Name="PathId" ColumnName="PathId" />
+                <ScalarProperty Name="DataSize" ColumnName="DataSize" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_aspnet_WebPartState_User">
+            <EntityTypeMapping TypeName="student22Model.vw_aspnet_WebPartState_User">
+              <MappingFragment StoreEntitySet="vw_aspnet_WebPartState_User">
+                <ScalarProperty Name="PathId" ColumnName="PathId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="DataSize" ColumnName="DataSize" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <AssociationSetMapping Name="aspnet_UsersInRoles" TypeName="student22Model.aspnet_UsersInRoles" StoreEntitySet="aspnet_UsersInRoles">
             <EndProperty Name="aspnet_Roles">
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
@@ -2146,7 +2748,7 @@
             <EndProperty Name="Group">
               <ScalarProperty Name="GroupId" ColumnName="Groups_GroupId" />
             </EndProperty>
-            <EndProperty Name="TestSet">
+            <EndProperty Name="Test">
               <ScalarProperty Name="TestId" ColumnName="Tests_TestId" />
             </EndProperty>
           </AssociationSetMapping>
@@ -2304,6 +2906,15 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="student22Model.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="student22Model.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="Results">
+            <EntityTypeMapping TypeName="student22Model.Result">
+              <MappingFragment StoreEntitySet="Result">
+                <ScalarProperty Name="Result1" ColumnName="Result" />
+                <ScalarProperty Name="aspnet_Users_UserId" ColumnName="aspnet_Users_UserId" />
+                <ScalarProperty Name="TestId" ColumnName="TestId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2319,7 +2930,7 @@
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="true" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>

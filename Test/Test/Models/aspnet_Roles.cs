@@ -20,6 +20,7 @@ namespace Test.Models
             this.aspnet_Users = new HashSet<aspnet_Users>();
         }
     
+        public System.Guid ApplicationId { get; set; }
         public System.Guid RoleId { get; set; }
         public string RoleName { get; set; }
         public string LoweredRoleName { get; set; }

@@ -17,6 +17,7 @@ namespace Test.Models
         public System.Guid VariantId { get; set; }
         public string Text { get; set; }
         public bool IsValid { get; set; }
+        public System.Guid Quastion_QuastionId { get; set; }
     
         public virtual Quastion Quastion { get; set; }
     }

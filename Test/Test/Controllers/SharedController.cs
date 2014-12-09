@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Test.Models;
+using ClassLibrary2;
 
 namespace Test.Controllers
 {
@@ -43,6 +44,22 @@ namespace Test.Controllers
         public ActionResult Errors()
         {
             return View();
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult Requests()
+        {
+            ViewData["links"] = getLinks();
+            ViewData["functions"] = getFunctions();
+            ModelContainer data = new Models.ModelContainer();
+            RequestDAO requestdao = new RequestDAO();
+            Res result = requestdao.ReadAllRequests(x => x.aspnet_Users.UserName.ToLower() == User.Identity.Name, data);
+            if (result.Success)
+            {
+                return View(result.Value);
+            }
+            else return RedirectToAction("Errors", "Shared");
         }
 
     }

@@ -6,14 +6,16 @@ using System.Web.Mvc;
 using Test.Models;
 using System.Web.Security;
 using Test.Models;
+using log4net;
+using log4net.Config;
 
 namespace Test.Controllers
 {
     public class AdminController : BaseController
     {
-        //
-        // GET: /Admin/
+        
         //Запросы
+        private static readonly ILog log = LogManager.GetLogger(typeof(AdminController));
 
         [HttpGet]
         [Authorize(Roles="Admin")]
@@ -23,9 +25,11 @@ namespace Test.Controllers
             ViewData["functions"] = getFunctions();
             ModelContainer data = new Models.ModelContainer();
             RequestDAO requestdao = new RequestDAO();
-            Result result = requestdao.ReadAllRequests(x => (true), data);
+            Res result = requestdao.ReadAllRequests(x => (true), data);
             if (result.Success)
+            {
                 return View(result.Value);
+            }
             else return RedirectToAction("Errors", "Shared");
 
         }
@@ -37,9 +41,13 @@ namespace Test.Controllers
         {
             RequestDAO requestdao = new RequestDAO();
             ModelContainer data = new Models.ModelContainer();
-            Result result = requestdao.RejectRequest(x => (x.aspnet_Users.LoweredUserName == UserLogin.ToLower() && x.aspnet_Roles.RoleName == Role), data);
+            Res result = requestdao.RejectRequest(x => (x.aspnet_Users.LoweredUserName == UserLogin.ToLower() && x.aspnet_Roles.RoleName == Role), data);
             if (result.Success)
-                return RedirectToAction("Requests", "Admin"); 
+            {
+                log4net.Config.XmlConfigurator.Configure();
+                log.Info("Пользователь " + User.Identity.Name + " как админ отклонил запросы.");
+                return RedirectToAction("Requests", "Admin");
+            }
             else return RedirectToAction("Errors", "Shared");
         }
 
@@ -50,7 +58,7 @@ namespace Test.Controllers
         {
             RequestDAO requestdao = new RequestDAO();
             ModelContainer data = new Models.ModelContainer();
-            Result result = requestdao.SatisfyRequest(x => (x.aspnet_Users.LoweredUserName == UserLogin.ToLower() && x.aspnet_Roles.RoleName == Role), data);
+            Res result = requestdao.SatisfyRequest(x => (x.aspnet_Users.LoweredUserName == UserLogin.ToLower() && x.aspnet_Roles.RoleName == Role), data);
             if (result.Success)
                 return RedirectToAction("Requests", "Admin");
             else return RedirectToAction("Errors", "Shared");
@@ -66,7 +74,7 @@ namespace Test.Controllers
             ViewData["functions"] = getFunctions();
             GroupDAO groupdao = new GroupDAO();
             ModelContainer data = new Models.ModelContainer();
-            Result result = groupdao.ReadAll(x => (true), data);
+            Res result = groupdao.ReadAll(x => (true), data);
             if (result.Success)
                 return View(result.Value);
             else return RedirectToAction("Errors", "Shared");
@@ -88,7 +96,7 @@ namespace Test.Controllers
         {
             GroupDAO groupDAO = new GroupDAO();
             ModelContainer data = new Models.ModelContainer();
-            Result result = groupDAO.CreateGroup(GroupName, data);
+            Res result = groupDAO.CreateGroup(GroupName, data);
             if (result.Success)
                 return RedirectToAction("Groups", "Admin");
             else return RedirectToAction("Errors", "Shared");
@@ -109,7 +117,7 @@ namespace Test.Controllers
         {
             GroupDAO groupDAO = new GroupDAO();
             ModelContainer data = new Models.ModelContainer();
-            Result result = groupDAO.DeleteGroup(x => (x.GroupName == GroupName), data);
+            Res result = groupDAO.DeleteGroup(x => (x.GroupName == GroupName), data);
             if (result.Success)
                 return RedirectToAction("Groups", "Admin");
             else return RedirectToAction("Errors", "Shared");
@@ -128,9 +136,11 @@ namespace Test.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult UpdateGroup(string NewGroupName, string OldGroupName)
         {
+            ViewData["links"] = getLinks();
+            ViewData["functions"] = getFunctions();
             GroupDAO groupDAO = new GroupDAO();
             ModelContainer data = new Models.ModelContainer();
-            Result result = groupDAO.UpdateGroup(NewGroupName, OldGroupName, data);
+            Res result = groupDAO.UpdateGroup(NewGroupName, OldGroupName, data);
             if (result.Success)
                 return RedirectToAction("Groups", "Admin");
             else return RedirectToAction("Errors", "Shared");
@@ -146,7 +156,7 @@ namespace Test.Controllers
             ViewData["functions"] = getFunctions();
             ModelContainer data = new Models.ModelContainer();
             StudentRequestDAO studentdao = new Models.StudentRequestDAO();
-            Result result = studentdao.ReadAllStudentRequests(x => true, data);
+            Res result = studentdao.ReadAllStudentRequests(x => true, data);
             if (result.Success)
                 return View(result.Value);
             else return RedirectToAction("Errors", "Shared");
@@ -156,9 +166,11 @@ namespace Test.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult AcceptStudentRequest(string UserLogin, string GroupName)
         {
+            ViewData["links"] = getLinks();
+            ViewData["functions"] = getFunctions();
             ModelContainer data = new Models.ModelContainer();
             StudentRequestDAO studentdao = new Models.StudentRequestDAO();
-            Result result = studentdao.SatisfyRequest(x => (x.aspnet_Users.LoweredUserName == UserLogin.ToLower() && x.Group.GroupName == GroupName), data);
+            Res result = studentdao.SatisfyRequest(x => (x.aspnet_Users.LoweredUserName == UserLogin.ToLower() && x.Group.GroupName == GroupName), data);
             if (result.Success)
                 return RedirectToAction("Groups", "Admin");
             else return RedirectToAction("Errors", "Shared");
@@ -168,9 +180,11 @@ namespace Test.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult RejectStudentRequest(string UserLogin, string GroupName)
         {
+            ViewData["links"] = getLinks();
+            ViewData["functions"] = getFunctions();
             ModelContainer data = new Models.ModelContainer();
             StudentRequestDAO studentdao = new Models.StudentRequestDAO();
-            Result result = studentdao.RejectRequest(x => (x.aspnet_Users.LoweredUserName == UserLogin.ToLower() && x.Group.GroupName == GroupName), data);
+            Res result = studentdao.RejectRequest(x => (x.aspnet_Users.LoweredUserName == UserLogin.ToLower() && x.Group.GroupName == GroupName), data);
             if (result.Success)
                 return RedirectToAction("Groups", "Admin");
             else return RedirectToAction("Errors", "Shared");

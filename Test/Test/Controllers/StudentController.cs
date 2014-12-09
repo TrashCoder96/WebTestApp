@@ -20,7 +20,7 @@ namespace Test.Controllers
             ViewData["functions"] = getFunctions();
             ModelContainer data = new ModelContainer();
             GroupDAO groupdao = new GroupDAO();
-            Result result = groupdao.ReadAll(x => (true), data);
+            Res result = groupdao.ReadAll(x => (true), data);
             if (result.Success)
             return View(result.Value);
              else return RedirectToAction("Errors", "Shared");
@@ -36,10 +36,36 @@ namespace Test.Controllers
             GroupDAO groupdao = new GroupDAO();
             IEnumerable<aspnet_Users> users = (IEnumerable<aspnet_Users>)(userdao.ReadAll(x => (x.LoweredUserName == User.Identity.Name.ToLower()), data).Value);
             IEnumerable<Group> groups = (IEnumerable<Group>)(groupdao.ReadAll(x => (x.GroupName == GroupName), data).Value);
-            Result result = studentrequestdao.CreateRequest(users.First(x => true), groups.First(x => true), data);
+            Res result = studentrequestdao.CreateRequest(users.First(x => true), groups.First(x => true), data);
 
                 return RedirectToAction("CreateStudentRequestView", "Student");
       
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Student")]
+        public ActionResult StudentRequests()
+        {
+            ViewData["links"] = getLinks();
+            ViewData["functions"] = getFunctions();
+            ModelContainer data = new Models.ModelContainer();
+            StudentRequestDAO studentdao = new Models.StudentRequestDAO();
+            Res result = studentdao.ReadAllStudentRequests(x => x.aspnet_Users.UserName == User.Identity.Name, data);
+            if (result.Success)
+                return View(result.Value);
+            else return RedirectToAction("Errors", "Shared");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Student")]
+        public ActionResult Tests()
+        {
+            ModelContainer data = new Models.ModelContainer();
+            
+            Group group = data.Groups.Select(g => g).Where(gr => gr.aspnet_Users.FirstOrDefault(u => u.UserName.ToLower() == User.Identity.Name.ToLower()) != null).First();
+            IEnumerable<Models.Test> tests = data.Tests.Select(t => t).Where(t => t.Groups.Contains(group));
+            int te = tests.Count();
+            return View(tests);
         }
 
     }

@@ -16,6 +16,8 @@ namespace Test.Models
     {
         public System.Guid RequestId { get; set; }
         public string Message { get; set; }
+        public System.Guid aspnet_Roles_RoleId { get; set; }
+        public System.Guid aspnet_Users_UserId { get; set; }
     
         public virtual aspnet_Roles aspnet_Roles { get; set; }
         public virtual aspnet_Users aspnet_Users { get; set; }

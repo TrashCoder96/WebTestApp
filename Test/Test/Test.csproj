@@ -39,6 +39,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ClassLibrary2">
+      <HintPath>..\..\..\ClassLibrary2\ClassLibrary2\bin\Debug\ClassLibrary2.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\..\..\Desktop\log4net-1.2.13\bin\net\4.0\release\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -160,104 +166,135 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\aspnet_Applications.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\aspnet_Membership.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\aspnet_Membership_GetPasswordWithFormat_Result.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\aspnet_Membership_GetPassword_Result.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\aspnet_Membership_GetUserByName_Result.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\aspnet_Membership_GetUserByUserId_Result.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\aspnet_Paths.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\aspnet_PersonalizationAllUsers.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\aspnet_PersonalizationPerUser.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\aspnet_Profile.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\aspnet_Profile_GetProperties_Result.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\aspnet_Roles.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\aspnet_SchemaVersions.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\aspnet_Users.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\aspnet_UsersInRoles_RemoveUsersFromRoles_Result.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\aspnet_WebEvent_Events.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DAO\DisciplineDAO.cs" />
     <Compile Include="Models\DAO\GroupDAO.cs" />
     <Compile Include="Models\DAO\StudentRequestDAO.cs" />
     <Compile Include="Models\DAO\RequestDAO.cs" />
+    <Compile Include="Models\DAO\TestDAO.cs" />
     <Compile Include="Models\Discipline.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Group.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Link.cs" />
-    <Compile Include="Models\Model.Context.cs">
+    <Compile Include="Models\ModelContainer.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model.Context.tt</DependentUpon>
+      <DependentUpon>ModelContainer.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Model.cs">
+    <Compile Include="Models\ModelContainer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Model.Designer.cs">
+    <Compile Include="Models\ModelContainer.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model.edmx</DependentUpon>
+      <DependentUpon>ModelContainer.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Quastion.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Request.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Result.cs" />
+    <Compile Include="Models\Res.cs" />
+    <Compile Include="Models\Result.cs">
+      <DependentUpon>ModelContainer.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DAO\UserDAO.cs" />
     <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_helpdiagrams_Result.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StudentRequest.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TestSet.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+    <Compile Include="Models\Test.cs">
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Variant.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+      <DependentUpon>ModelContainer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_aspnet_Applications.cs">
+      <DependentUpon>ModelContainer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_aspnet_MembershipUsers.cs">
+      <DependentUpon>ModelContainer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_aspnet_Profiles.cs">
+      <DependentUpon>ModelContainer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_aspnet_Roles.cs">
+      <DependentUpon>ModelContainer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_aspnet_Users.cs">
+      <DependentUpon>ModelContainer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_aspnet_UsersInRoles.cs">
+      <DependentUpon>ModelContainer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_aspnet_WebPartState_Paths.cs">
+      <DependentUpon>ModelContainer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_aspnet_WebPartState_Shared.cs">
+      <DependentUpon>ModelContainer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_aspnet_WebPartState_User.cs">
+      <DependentUpon>ModelContainer.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\WebTestSite.Master.cs">
@@ -325,22 +362,23 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <EntityDeploy Include="Models\Model.edmx">
+    <Content Include="Models\Model.edmx.sql" />
+    <EntityDeploy Include="Models\ModelContainer.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model.Designer.cs</LastGenOutput>
+      <LastGenOutput>ModelContainer.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\Model.Context.tt">
+    <Content Include="Models\ModelContainer.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model.edmx</DependentUpon>
-      <LastGenOutput>Model.Context.cs</LastGenOutput>
+      <DependentUpon>ModelContainer.edmx</DependentUpon>
+      <LastGenOutput>ModelContainer.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Model.edmx.diagram">
-      <DependentUpon>Model.edmx</DependentUpon>
+    <Content Include="Models\ModelContainer.edmx.diagram">
+      <DependentUpon>ModelContainer.edmx</DependentUpon>
     </Content>
-    <Content Include="Models\Model.tt">
+    <Content Include="Models\ModelContainer.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model.edmx</DependentUpon>
-      <LastGenOutput>Model.cs</LastGenOutput>
+      <DependentUpon>ModelContainer.edmx</DependentUpon>
+      <LastGenOutput>ModelContainer.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
@@ -370,10 +408,16 @@
     <Content Include="Views\Lector\CreateDisciplineView.aspx" />
     <Content Include="Views\Lector\DeleteDisciplineView.aspx" />
     <Content Include="Views\Lector\Disciplines.aspx" />
+    <Content Include="Views\Lector\Test.aspx" />
+    <Content Include="Views\Lector\Tests.aspx" />
     <Content Include="Views\Lector\UpdateDisciplineView.aspx" />
+    <Content Include="Views\Lector\Variants.aspx" />
     <Content Include="Views\Shared\CreateRequest.aspx" />
     <Content Include="Views\Shared\Errors.aspx" />
+    <Content Include="Views\Shared\Requests.aspx" />
     <Content Include="Views\Student\CreateStudentRequestView.aspx" />
+    <Content Include="Views\Student\StudentRequests.aspx" />
+    <Content Include="Views\Student\Tests.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

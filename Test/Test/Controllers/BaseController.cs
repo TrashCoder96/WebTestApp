@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ClassLibrary2;
 
 namespace Test.Controllers
 {
@@ -29,6 +30,7 @@ namespace Test.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 links.Add(new Models.Link("CreateRequest", "Shared", "Запросить верификацию"));
+                links.Add(new Models.Link("Requests", "Shared", "Ваши запросы"));
             }
             if(User.IsInRole("Admin"))
             {
@@ -43,8 +45,9 @@ namespace Test.Controllers
             }
             if (User.IsInRole("Student"))
             {
-                links.Add(new Models.Link("Take", "Student", "Пройти тест"));
+                links.Add(new Models.Link("Tests", "Student", "Пройти тест"));
                 links.Add(new Models.Link("CreateStudentRequestView", "Student", "Запрос на вступление в группу"));
+                links.Add(new Models.Link("StudentRequests", "Student", "Ваши запросы на вступление в группу"));
 
             }
 

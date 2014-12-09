@@ -19,6 +19,7 @@ namespace Test.Models
             this.aspnet_PersonalizationPerUser = new HashSet<aspnet_PersonalizationPerUser>();
         }
     
+        public System.Guid ApplicationId { get; set; }
         public System.Guid PathId { get; set; }
         public string Path { get; set; }
         public string LoweredPath { get; set; }

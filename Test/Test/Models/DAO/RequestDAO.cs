@@ -11,7 +11,7 @@ namespace Test.Models
 {
     public class RequestDAO
     {
-        public Result ReadAllRequests(Func<Request, bool> p, ModelContainer data)
+        public Res ReadAllRequests(Func<Request, bool> p, ModelContainer data)
         {
             bool Success = true;
             IEnumerable<Request> requests = null;
@@ -24,10 +24,10 @@ namespace Test.Models
                 Success = false;
             }
            
-            return new Result(Success, requests);
+            return new Res(Success, requests);
         }
 
-        public Result SatisfyRequest(Func<Request, bool> p, ModelContainer data)
+        public Res SatisfyRequest(Func<Request, bool> p, ModelContainer data)
         {
             bool Success = true;
             IEnumerable<Request> requests = null;
@@ -46,10 +46,10 @@ namespace Test.Models
                 Success = false;
             }
             
-            return new Result(Success, requests);
+            return new Res(Success, requests);
         }
 
-        public Result RejectRequest(Func<Request, bool> p, ModelContainer data)
+        public Res RejectRequest(Func<Request, bool> p, ModelContainer data)
         {
             bool Success = true;
             IEnumerable<Request> requests = null;
@@ -67,10 +67,10 @@ namespace Test.Models
                 Success = false;
             }
             
-            return new Result(Success, requests);
+            return new Res(Success, requests);
         }
 
-        public Result CreateRequest(aspnet_Users user, string role, string Message, ModelContainer data)
+        public Res CreateRequest(aspnet_Users user, string role, string Message, ModelContainer data)
         {
             bool Success = true;
             Request request = null;
@@ -92,7 +92,7 @@ namespace Test.Models
             {
                 
             }
-            return new Result(Success, request);
+            return new Res(Success, request);
         }
 
     }

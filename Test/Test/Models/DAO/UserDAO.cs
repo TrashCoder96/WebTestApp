@@ -9,7 +9,7 @@ namespace Test.Models
 {
     public class UserDAO
     {
-        public Result ReadAll(Func<aspnet_Users, bool> p, ModelContainer data)
+        public Res ReadAll(Func<aspnet_Users, bool> p, ModelContainer data)
         {
             bool Success = true;
             IEnumerable<aspnet_Users> users = null;
@@ -25,7 +25,7 @@ namespace Test.Models
            // {
                 
            // }
-            return new Result(Success, users);
+            return new Res(Success, users);
         }
         
 
