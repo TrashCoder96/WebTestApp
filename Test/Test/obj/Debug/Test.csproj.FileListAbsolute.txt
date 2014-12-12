@@ -123,6 +123,5 @@ C:\Users\asus-pc\Documents\GitHub\WebTestApp\Test\Test\obj\Debug\Test.dll
 C:\Users\asus-pc\Documents\GitHub\WebTestApp\Test\Test\obj\Debug\Test.pdb
 C:\Users\asus-pc\Documents\GitHub\WebTestApp\Test\Test\bin\log4net.dll
 C:\Users\asus-pc\Documents\GitHub\WebTestApp\Test\Test\bin\log4net.xml
-C:\Users\asus-pc\Documents\GitHub\WebTestApp\Test\Test\bin\ClassLibrary2.dll
 C:\Users\asus-pc\Documents\GitHub\WebTestApp\Test\Test\bin\ClassLibrary2.pdb
 C:\Users\asus-pc\Documents\GitHub\WebTestApp\Test\Test\obj\Debug\Test.csprojResolveAssemblyReference.cache

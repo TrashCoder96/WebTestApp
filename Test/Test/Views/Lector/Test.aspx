@@ -4,29 +4,29 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="Main" runat="server">
 
-<h2>Редактирование теста</h2>
-    Вопросы:
-   <table style="border: thin" border="1">
+<table style="border: thin" border="1">
 <% foreach (Test.Models.Quastion item in Model.Quastions) { %>
     <tr>
         <td>
-            <%: item.Text %>
+           <%:item.Text %>
         </td>
         <td>
-            <form method="get" action="/Lector/Variants">
-                  <%: Html.Hidden("QuastionId", item.QuastionId.ToString()) %>
-                  <%: Html.Hidden("TestId", Model.TestId.ToString()) %>
-                <input type="submit" value="Редактировать варианты" />
-            </form>
+            <%:Html.Action("Question", "Lector", new { QuestionId = item.QuastionId.ToString()}) %>
         </td>
+        <td>
+            <%:Html.ActionLink("Удалить","DeleteQuestion", "Lector", new { QuestionId = item.QuastionId.ToString() }, null) %>
+        </td>
+
     </tr>
 <% } %>
-       </table>
-       <form method="post" action="/Lector/CreateQuastion">
-                <input type="text" name="QuastionText"/>
-                <%: Html.Hidden("TestId", Model.TestId.ToString()) %>
-                <input type="submit" value="Создать вопрос" />
-       </form>
+</table>
 
+Создать новый вопрос:
+<form method="get" action="/Lector/CreateQuestion">
+<%:Html.Hidden("TestId", Model.TestId.ToString()) %>
+<input type="text" name="QuestionText" /> Текст вопроса
+<br />
+<input type="submit" value="Создать" />
+</form>
 
 </asp:Content>

@@ -40,8 +40,10 @@ namespace Test.Controllers
             }
             if (User.IsInRole("Lector"))
             {
+                links.Add(new Models.Link("GetStatistics", "Lector", "Статистика"));
                 links.Add(new Models.Link("Disciplines", "Lector", "Управление дисциплинами"));
                 links.Add(new Models.Link("Tests", "Lector", "Управление тестами"));
+                links.Add(new Models.Link("GroupsAndTests", "Lector", "Связать группы и тесты"));
             }
             if (User.IsInRole("Student"))
             {

@@ -5,20 +5,100 @@ using System.Web;
 
 namespace Test.Models.DAO
 {
+
     public class TestDAO
     {
+        public Res ReadAllResults(Func<Result, bool> p, ModelContainer data)
+        {
+            bool Success = true;
+            IEnumerable<Result> results = null;
+            try
+            {
+                results = data.Results.Select(row => row).Where(p);
+            }
+            catch (Exception e)
+            {
+                Success = false;
+            }
+
+            return new Res(Success, results);
+        }
+
+
+        public Res Check(Test t, ModelContainer data, aspnet_Users user)
+        {
+            int c = 0;
+            bool Success = true;
+            try
+            {
+                Test test = (ReadTests(x => x.TestId == t.TestId, data).Value as IEnumerable<Test>).First();
+                //сравнение вопросов у тестов
+                for(int i = 0; i < test.Quastions.ToList().Count; i++)
+                {
+                    int b = 1;
+                    for(int j = 0; j < test.Quastions.ToList()[i].Variants.Count; j++)
+                    {
+                        if (test.Quastions.ToList()[i].Variants.ToList()[j].IsValid != t.Quastions.ToList()[i].Variants.ToList()[j].IsValid)
+                        {
+                            b = 0;
+                        }
+                    }
+                    c += b;
+
+                }
+
+                //сохранение результатов, только если не уже не был пройден этот тест
+                if (data.Results.FirstOrDefault(x => x.aspnet_Users.UserId == user.UserId && x.TestId == t.TestId) != null)
+                    return new Res(Success, data.Results.FirstOrDefault(x => x.aspnet_Users.UserId == user.UserId && x.TestId == t.TestId).Result1);
+                Result r = data.Results.Create();
+                r.TestId = t.TestId;
+                r.Test = test;
+                r.Result1 = c;
+                r.aspnet_Users = user;
+                r.aspnet_Users_UserId = user.UserId;
+                data.Results.Add(r);
+                data.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Success = false;
+            }
+
+            return new Res(Success, c);
+        }
+
+
+
+        public Res Bind(Test t, Group g, ModelContainer data)
+        {
+            bool Success = true;
+            try
+            {
+                g.Tests.Add(t);
+                data.Tests.First(tt => tt.TestId == t.TestId).Groups.Add(g);
+                data.SaveChanges();
+
+            }
+            catch (Exception e)
+            {
+                Success = false;
+            }
+
+            return new Res(Success, null);
+        }
+
         public Res ReadTests(Func<Test, bool> p, ModelContainer data)
         {
             bool Success = true;
             IEnumerable<Test> tests = null;
-           // try
-           // {
+            try
+            {
                 tests = data.Tests.Select(row => row).Where(p);
-         //   }
-          //  catch (Exception e)
-          //  {
+            }
+            catch (Exception e)
+            {
                 Success = false;
-          //  }
+            }
 
             return new Res(Success, tests);
         }
@@ -27,14 +107,14 @@ namespace Test.Models.DAO
         {
             bool Success = true;
             IEnumerable<Quastion> quastions = null;
-            // try
-            // {
-            quastions = data.Quastions.Select(row => row).Where(p);
-            //   }
-            //  catch (Exception e)
-            //  {
-            Success = false;
-            //  }
+            try
+            {
+                quastions = data.Quastions.Select(row => row).Where(p);
+            }
+            catch (Exception e)
+            {
+                Success = false;
+            }
 
             return new Res(Success, quastions);
         }
@@ -43,29 +123,27 @@ namespace Test.Models.DAO
         {
             bool Success = true;
             IEnumerable<Variant> variants = null;
-            // try
-            // {
-            variants = data.Variants.Select(row => row).Where(p);
-            //   }
-            //  catch (Exception e)
-            //  {
-            Success = false;
-            //  }
+            try
+            {
+                variants = data.Variants.Select(row => row).Where(p);
+            }
+            catch (Exception e)
+            {
+                Success = false;
+            }
 
             return new Res(Success, variants);
         }
 
-        public Res CreateTests(string TestName, Discipline discipline, string GroupId, ModelContainer data)
+        public Res CreateTests(string TestName, Discipline discipline, ModelContainer data)
         {
             bool Success = true;
             IEnumerable<Test> tests = null;
             try
             {
-                Group g = ((new GroupDAO()).ReadAll(x => x.GroupId.ToString() == GroupId, data).Value as IEnumerable<Group>).First();
                 Test test = data.Tests.Create();
                 test.TestId = Guid.NewGuid();
                 test.Name = TestName;
-                test.Groups.Add(g);
                 test.Discipline = discipline;
                 data.Tests.Add(test);
                 data.SaveChanges();
@@ -82,35 +160,20 @@ namespace Test.Models.DAO
         {
             bool Success = true;
             IEnumerable<Test> tests = null;
-            IEnumerable<Models.Quastion> questions = null;
-            IEnumerable<Variant> variants = null;
-            //try
-            //{
+            try
+            {
                 tests = data.Tests.Select(row => row).Where(p);
-                    
-
-                foreach (Test t in tests)
+                foreach (Test t in tests.ToList())
                 {
-                    foreach(Quastion q in t.Quastions)
-                    {
-                        foreach(Variant v in q.Variants)
-                        {
-
-                            data.Variants.Remove(v);
-                            
-                        }
-                        data.Quastions.Remove(q);
-                        
-                    }
                     data.Tests.Remove(t);
-                   
+
                 }
                 data.SaveChanges();
-           // }
-          //  catch (Exception e)
-          //  {
+            }
+            catch (Exception e)
+            {
                 Success = false;
-          //  }
+            }
 
             return new Res(Success, tests);
         }
@@ -119,19 +182,19 @@ namespace Test.Models.DAO
         {
             bool Success = true;
             IEnumerable<Quastion> quastions = null;
-            //try
-           // {
+            try
+            {
                 Quastion q = data.Quastions.Create();
                 q.QuastionId = Guid.NewGuid();
                 q.Text = text;
                 q.Test = data.Tests.First(x => x.TestId == test.TestId);
                 data.Quastions.Add(q);
                 data.SaveChanges();
-           // }
-           // catch (Exception e)
-           // {
+            }
+            catch (Exception e)
+            {
                 Success = false;
-           // }
+            }
 
             return new Res(Success, quastions);
         }
@@ -177,8 +240,8 @@ namespace Test.Models.DAO
         {
             bool Success = true;
             IEnumerable<Quastion> quastions = null;
-           // try
-           // {
+            try
+            {
                 Quastion quastion = data.Quastions.First(x => x.QuastionId == q.QuastionId);
                 Variant v = data.Variants.Create();
                 v.VariantId = Guid.NewGuid();
@@ -187,11 +250,11 @@ namespace Test.Models.DAO
                 v.Quastion = q;
                 data.Variants.Add(v);
                 data.SaveChanges();
-           // }
-           // catch (Exception e)
-           // {
+            }
+            catch (Exception e)
+            {
                 Success = false;
-         //   }
+            }
             return new Res(Success, quastions);
         }
 

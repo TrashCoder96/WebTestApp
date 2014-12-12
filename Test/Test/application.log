@@ -21,3 +21,4 @@
 2014-12-02 09:22:18,090 [7] INFO  Test.Controllers.AdminController [Requests] - Пользователь add читает запросы.
 2014-12-02 09:22:54,508 [8] INFO  Test.Controllers.AdminController [Requests] - Пользователь add читает запросы.
 2014-12-04 11:15:38,964 [6] INFO  Test.Controllers.AdminController [Requests] - Пользователь add читает запросы.
+2014-12-11 02:16:52,265 [6] INFO  Test.Controllers.AdminController [Reject] - Пользователь add как админ отклонил запросы.

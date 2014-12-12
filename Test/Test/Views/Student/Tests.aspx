@@ -11,12 +11,12 @@
             <%: item.Name %>
         </td>
         <td>
-            <form method="get" action="/Lector/TakeTest" >
+            <form method="get" action="/Student/Begin" >
             <%: Html.Hidden("TestId", item.TestId.ToString()) %>
             <input type="submit" value="Пройти тест" />
-            </form>
-           
+            </form>    
         </td>
+
 
     </tr>
 <% } %>

@@ -408,15 +408,20 @@
     <Content Include="Views\Lector\CreateDisciplineView.aspx" />
     <Content Include="Views\Lector\DeleteDisciplineView.aspx" />
     <Content Include="Views\Lector\Disciplines.aspx" />
+    <Content Include="Views\Lector\GetStatistics.aspx" />
+    <Content Include="Views\Lector\GroupsAndTests.aspx" />
+    <Content Include="Views\Lector\Question.aspx" />
     <Content Include="Views\Lector\Test.aspx" />
     <Content Include="Views\Lector\Tests.aspx" />
     <Content Include="Views\Lector\UpdateDisciplineView.aspx" />
-    <Content Include="Views\Lector\Variants.aspx" />
+    <Content Include="Views\Lector\Variant.aspx" />
     <Content Include="Views\Shared\CreateRequest.aspx" />
     <Content Include="Views\Shared\Errors.aspx" />
     <Content Include="Views\Shared\Requests.aspx" />
     <Content Include="Views\Student\CreateStudentRequestView.aspx" />
+    <Content Include="Views\Student\SendTest.aspx" />
     <Content Include="Views\Student\StudentRequests.aspx" />
+    <Content Include="Views\Student\Test.aspx" />
     <Content Include="Views\Student\Tests.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
